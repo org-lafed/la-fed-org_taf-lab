@@ -1,0 +1,89 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "Website for automation practice" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Website for automation practice" [ref=e9]
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link " Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e15]: 
+            - text: Home
+        - listitem [ref=e16]:
+          - link " Products" [ref=e17] [cursor=pointer]:
+            - /url: /products
+            - generic [ref=e18]: 
+            - text: Products
+        - listitem [ref=e19]:
+          - link " Cart" [ref=e20] [cursor=pointer]:
+            - /url: /view_cart
+            - generic [ref=e21]: 
+            - text: Cart
+        - listitem [ref=e22]:
+          - link " Signup / Login" [ref=e23] [cursor=pointer]:
+            - /url: /login
+            - generic [ref=e24]: 
+            - text: Signup / Login
+        - listitem [ref=e25]:
+          - link " Test Cases" [ref=e26] [cursor=pointer]:
+            - /url: /test_cases
+            - generic [ref=e27]: 
+            - text: Test Cases
+        - listitem [ref=e28]:
+          - link " API Testing" [ref=e29] [cursor=pointer]:
+            - /url: /api_list
+            - generic [ref=e30]: 
+            - text: API Testing
+        - listitem [ref=e31]:
+          - link " Video Tutorials" [ref=e32] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/AutomationExercise
+            - generic [ref=e33]: 
+            - text: Video Tutorials
+        - listitem [ref=e34]:
+          - link " Contact us" [ref=e35] [cursor=pointer]:
+            - /url: /contact_us
+            - generic [ref=e36]: 
+            - text: Contact us
+  - generic [ref=e38]:
+    - list [ref=e40]:
+      - listitem [ref=e41]:
+        - link "Home" [ref=e42] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e43]: Shopping Cart
+    - paragraph [ref=e46]:
+      - text: Cart is empty! Click
+      - link "here" [ref=e47] [cursor=pointer]:
+        - /url: /products
+      - text: to buy products.
+  - contentinfo [ref=e48]:
+    - generic [ref=e53]:
+      - heading "Subscription" [level=2] [ref=e54]
+      - generic [ref=e55]:
+        - textbox "Your email address" [ref=e56]
+        - button "" [ref=e57] [cursor=pointer]:
+          - generic [ref=e58]: 
+        - paragraph [ref=e59]:
+          - text: Get the most recent updates from
+          - text: our site and be updated your self...
+    - paragraph [ref=e63]: Copyright © 2021 All rights reserved
+  - text: 
+  - insertion [ref=e64]:
+    - iframe [ref=e67]:
+      - iframe [ref=f244e1]:
+        - generic [active]:
+          - generic [ref=f247e2]:
+            - link "Click Here" [ref=f247e3] [cursor=pointer]:
+              - /url: https://googleads.g.doubleclick.net/dbm/clk?sa=L&ai=CdGr9XyDSaaaLNKSSv_IPt9OEwAS04JrhgAG4mcnouROW0cjP4AEQASD9tJ6VAWD7AaABrLKPoAHIAQmoAwHIA5sEqgSEAk_QXT8ZTQxEdOijj-y-e6p-uT-9wEZZCeeTIUAG5uiN-jvjZM-AweP3Z0kyB8-Q6dBjR64azogRyn-tDKGuII3c7pdgLWKiTOiZFVADsSypd-6R_17np4uUJuAPWF1CZ81X_p-U7guz5gIfljsR7VhLUNHCU77_jr4wdKdHNt0fcozct2s5OU2EFNHpP2T_u6btDnzylgaknx3267qZk3_rvgIF8a4dyzvGPWKFRhBdpx-L5bxhQ995mqtGZ1NqjzIG3N6Bjh_5LN5J0PeMwukO7MOLV6qGF0Tj5pMDD2mTdkFbA_obmGpsWBjfMcTz6K3fp3Lgg9auD2TSx0jvjfWVGPaHwASuhq2Z5QTgBAOIBc6wkuVQkAYBoAZNgAe8zfDfAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAqgH59exAtgHANIIMgiA4YAQEAEYnwMyCKqCgICAgIAIOg6AwAOAgISAgJSu4AOoB0i9_cE6WPT8-LOo1pMDgAoBmAsByAsBgAwBqg0CRlLqDRMI-L36s6jWkwMVJMlPCB23KQFI8A0BiA4JsBOzktMh0BMA2BMK2BQB0BUByhYCCgD4FgGAFwGyFwQYAlAG6BcEshgJEgKdYxhNIgEA0BkB&ae=1&num=1&cid=CAQSbwAFq6B92VGcbLbC6IX08_5LuKsyso3OVwNwJ0nZze8vRJ7TXhtJGQAMZnETfqSGxNfjX7uw_6Gtbj2OrriAieCPAkIoqgCBCpPP8oV11DFPcI8UuWdt8MCBKSVFzfrkEKW7ZtUKNMaoL6BNaCYhBhgB&sig=AOD64_0CsNHbueB82-5CXXleSz2BIe8BOg&client=ca-pub-1677597403311019&dbm_c=AKAmf-DwNhSjtSVR2_WoBVfGdgbEFXSbySk-hZ4pMBT5JEBCwBODnxEePpFUHUqkIl_YqysPfZBt4vyRi8pP8OaZ1Pemu39H5ypjujBVP7i0fhULeyY20tqH5sNiBbv956RwqLGpyv71mC2Imm9Cggycykca_GQ9Dnmbb4GnTv_-gurBgJ0ejhaCM28XxRwwKnl-jEZkCLUd5rctMD7lFRCpB41LExsupJmRtOr02B9u9Z2Jn3nEhGbzLoyE7Rrl1NUagziTDs3R3UevhDbUGEbl0Nq6IeCKzQ&cry=1&dbm_d=AKAmf-DKgdW6mKxj0Fok1yKWRmYfgw8qjs9ePHPZRPqkk6dtv2EKbCmik9lc-uppkGWp-7GELXKQaYwnyWy6iTpCxKXDJqqV_TC9eIbcYpLAxSbE67w5g4g6D7hFe5FapDMy8HesD5R4kyWBmL0LZO41CkvlmZ7BXSjx3gGBWim-J2vgJua9LyJOJJ21Lhs58e-Z9spYiodcf971QLe2EE-M02COtnfjjp29ORUNq8IE9_4eCyxECXFu6qqTm6X23G8S9qQP2x3r0N7mU4nnpR8NXHb8I6f_cUS9kpgieHDTOhrt5gAI_T74FsePsnjNWDTkh1duxtDJ9_N9WhIfCAJV1uQJ_1qghDMaWhZFN8JGVOhIS9lQN3msangJ7KwvO557G_8_hvClPQzIJmN3kq_waD-2-seT_GDzRqDdrlD-AdU9bzKDMSvGXrnUkThakrDWARk0m3B9ZI1X0Msa5aw_vyDAF8DHZU1rc787ULIXPBS871EwELx_Dq18LAIRp2NSZkc2n5Tq8KH_LbEEPwbxMPezv-B_RrMrzifn91z1799IwnsOw1IiWWdTOH6mvvCQZ4UrDA1JQDowlZydqAVsAWVIAHcp8tU0Y1_CW8M4696-mNTxqI0kQnJd7L8AnmmjLX0DEYqKddXrnuPDUqSzRxwD644ZwhCPEHUzipGhNADfN9bBJBgTuzP2TITA6RdcI_-Jp_iU&adurl=https://servedby.flashtalking.com/click/1/251912;8748481;5865482;210;0/?us_privacy=!!US_PRIVACY!&gdpr_consent=CQiMHwAQiMHwAEsACBFRCZFoAP_gAEPgABBoK3oB_C7EbCFCiDJ3IKMEMAhHABBAYsAwAAYBAwAADBIQIAQCgkEYBASAFCACCAAAKASBAAAgCAAAAUAAIAAFAABAAAwAIBAIIAAAgAAAAEAIAAAACIAAEQCAAAAEAEAAkAgAAAIASEAAAAAAAACBAAAAAAAAAAAAAAAABAEAAQAAQAAAAAAAiAAAAAAAABAIAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAQgsIgH8LsRsIUKIMFcgowQwCFcAEABiwDAABgEDAAAMEhAgBAKSQRIEAIAQIAAIAAAgBAEAACgICAAAQAAAABUAAEAADAAgEAgAQACAAABAQAAAAAAIgAARAIAAAAQAQACACAAAAgBIQAAAAAAAAIEAAAAAAAAAAAAAAAAAAQAAIADAAAAAAACIAAAAAAAAEAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAA.ILCIB_C7EbCFCiDJ3IKMEMAhXABBAYsAwAAYBAwAADBIQIAQCkkEaBASAFCACCAAAKASBAAAoCAgAAUAAIAAVAABAAAwAIBAIIEAAgAAAQEAIAAAACIAAEQCAAAAEAEAAkAgAAAIASEAAAAAAAACBAAAAAAAAAAAAAAAABAEAASAAwAAAAAAAiAAAAAAAABAIEAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAQgAAE&gdpr=1&ft_partnerimpid=ABAjH0iMxfOsUcmMNbN1rZ9dHt8o&ft_impID=8A418AE0-FF64-3DA6-298C-712D99279CA7&g=6669B9D0F9C0DD&random=188303.52112409918&ft_width=728&ft_height=90&url=https://www.adobe.com/fr/products/photoshop.html?sdid=SPVLM3PR&mv=display&mv2=display
+              - img "Click Here" [ref=f247e4]
+            - link "AdChoices arrow" [ref=f247e6] [cursor=pointer]:
+              - /url: https://www.flashtalking.com/consumer-privacy
+              - img "AdChoices arrow" [ref=f247e7]
+          - iframe
+  - generic:
+    - insertion:
+      - generic:
+        - iframe
+  - generic [ref=e69]:
+    - button "Paramètres concernant la confidentialité et les cookies" [ref=e70] [cursor=pointer]
+    - generic [ref=e71]: "Géré par Google. Conforme au TCF de l'IAB. ID de CMP : 300"

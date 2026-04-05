@@ -8,6 +8,7 @@ This framework uses a small layered design aimed at readability and maintainabil
 - `api` contains endpoint clients, services, DTOs, and API-focused assertions.
 - `data` contains builders and generators for deterministic or synthetic test data.
 - `tests` contains executable TestNG tests only.
+- Shared UI interactions include a site-wide interference guard that mitigates cookie-adjacent overlays, ad iframes, and vignette-style page interference before and during user actions.
 
 Design rules:
 

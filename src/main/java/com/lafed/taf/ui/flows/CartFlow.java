@@ -10,8 +10,8 @@ public class CartFlow {
         this.productsPage = productsPage;
     }
 
-    public CartPage addFirstProductAndOpenCart(CartPage cartPage) {
+    public CartPage addFirstVisibleProductAndOpenCart() {
         productsPage.addFirstVisibleProductToCart();
-        return cartPage.open();
+        return productsPage.viewCartFromAddToCartConfirmation();
     }
 }

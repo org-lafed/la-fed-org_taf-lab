@@ -28,6 +28,9 @@ public final class AllureSupport {
     }
 
     public static void attachText(String name, String content) {
+        if (content == null || Allure.getLifecycle().getCurrentTestCaseOrStep().isEmpty()) {
+            return;
+        }
         Allure.addAttachment(name, "text/plain", content, ".txt");
     }
 

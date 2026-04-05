@@ -8,6 +8,7 @@ public final class ExecutionConfig {
     private final String baseUrl;
     private final String apiBaseUrl;
     private final String browser;
+    private final String browserBinaryPath;
     private final boolean headless;
     private final int windowWidth;
     private final int windowHeight;
@@ -20,6 +21,7 @@ public final class ExecutionConfig {
             String baseUrl,
             String apiBaseUrl,
             String browser,
+            String browserBinaryPath,
             boolean headless,
             int windowWidth,
             int windowHeight,
@@ -30,6 +32,7 @@ public final class ExecutionConfig {
         this.baseUrl = trimTrailingSlash(baseUrl);
         this.apiBaseUrl = trimTrailingSlash(apiBaseUrl);
         this.browser = browser;
+        this.browserBinaryPath = normalizeBlank(browserBinaryPath);
         this.headless = headless;
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
@@ -52,6 +55,10 @@ public final class ExecutionConfig {
 
     public String getBrowser() {
         return browser;
+    }
+
+    public String getBrowserBinaryPath() {
+        return browserBinaryPath;
     }
 
     public boolean isHeadless() {
@@ -83,5 +90,9 @@ public final class ExecutionConfig {
             return value;
         }
         return value.endsWith("/") ? value.substring(0, value.length() - 1) : value;
+    }
+
+    private static String normalizeBlank(String value) {
+        return value == null || value.isBlank() ? null : value.trim();
     }
 }

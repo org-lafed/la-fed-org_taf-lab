@@ -2,12 +2,14 @@ package com.lafed.taf.ui.pages;
 
 import com.lafed.taf.api.models.User;
 import com.lafed.taf.config.ExecutionConfig;
+import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignupPage extends BasePage {
     private static final By ACCOUNT_INFO_HEADER = By.cssSelector(".login-form h2 b");
+    private static final By TITLE_OPTIONS = By.cssSelector("#id_gender1, #id_gender2");
     private static final By TITLE_MR = By.cssSelector("#id_gender1");
     private static final By TITLE_MRS = By.cssSelector("#id_gender2");
     private static final By PASSWORD_INPUT = By.cssSelector("#password");
@@ -32,13 +34,23 @@ public class SignupPage extends BasePage {
 
     @Override
     public boolean isLoaded() {
-        return isDisplayed(ACCOUNT_INFO_HEADER)
-                && isDisplayed(PASSWORD_INPUT)
-                && isDisplayed(FIRST_NAME_INPUT)
-                && isDisplayed(CREATE_ACCOUNT_BUTTON);
+        return isDisplayedSafely(ACCOUNT_INFO_HEADER)
+                && isDisplayedSafely(PASSWORD_INPUT)
+                && isDisplayedSafely(FIRST_NAME_INPUT)
+                && isDisplayedSafely(CREATE_ACCOUNT_BUTTON)
+                && hasAnyVisible(TITLE_OPTIONS);
+    }
+
+    public SignupPage waitUntilReady() {
+        waitForDocumentReady();
+        new WebDriverWait(driver, Duration.ofSeconds(config.getExplicitTimeoutSeconds()))
+                .until(ignored -> isLoaded());
+        return this;
     }
 
     public SignupPage fillAccountDetails(User user) {
+        waitUntilReady();
+
         if ("Mrs".equalsIgnoreCase(user.getTitle()) || "Miss".equalsIgnoreCase(user.getTitle())) {
             click(TITLE_MRS);
         } else {
@@ -54,7 +66,7 @@ public class SignupPage extends BasePage {
         type(COMPANY_INPUT, user.getCompany());
         type(ADDRESS1_INPUT, user.getAddress1());
         type(ADDRESS2_INPUT, user.getAddress2());
-        selectByVisibleText(COUNTRY_SELECT, user.getCountry());
+        selectByVisibleTextRobustly(COUNTRY_SELECT, user.getCountry());
         type(STATE_INPUT, user.getState());
         type(CITY_INPUT, user.getCity());
         type(ZIPCODE_INPUT, user.getZipcode());
@@ -65,9 +77,5 @@ public class SignupPage extends BasePage {
     public AccountCreatedPage submitAccountCreation() {
         click(CREATE_ACCOUNT_BUTTON);
         return new AccountCreatedPage(driver, config);
-    }
-
-    private void selectByVisibleText(By locator, String text) {
-        new Select(find(locator)).selectByVisibleText(text);
     }
 }

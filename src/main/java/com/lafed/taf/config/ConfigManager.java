@@ -49,6 +49,7 @@ public final class ConfigManager {
                 resolve(properties, envVars, "base.url", "TAF_BASE_URL"),
                 resolve(properties, envVars, "api.base.url", "TAF_API_BASE_URL"),
                 resolve(properties, envVars, "browser", "TAF_BROWSER"),
+                resolveOptional(properties, envVars, "browser.binary.path", "TAF_BROWSER_BINARY"),
                 Boolean.parseBoolean(resolve(properties, envVars, "headless", "TAF_HEADLESS")),
                 Integer.parseInt(resolve(properties, envVars, "window.width", "TAF_WINDOW_WIDTH")),
                 Integer.parseInt(resolve(properties, envVars, "window.height", "TAF_WINDOW_HEIGHT")),
@@ -68,6 +69,25 @@ public final class ConfigManager {
                 System.getProperty(propertyKey),
                 envVars.get(envKey),
                 properties.getProperty(propertyKey));
+    }
+
+    private static String resolveOptional(Properties properties, Map<String, String> envVars, String propertyKey, String envKey) {
+        String systemValue = System.getProperty(propertyKey);
+        if (systemValue != null && !systemValue.isBlank()) {
+            return systemValue.trim();
+        }
+
+        String envValue = envVars.get(envKey);
+        if (envValue != null && !envValue.isBlank()) {
+            return envValue.trim();
+        }
+
+        String propertyValue = properties.getProperty(propertyKey);
+        if (propertyValue != null && !propertyValue.isBlank()) {
+            return propertyValue.trim();
+        }
+
+        return null;
     }
 
     private static String firstNonBlank(String... values) {

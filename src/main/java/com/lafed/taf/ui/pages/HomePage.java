@@ -3,8 +3,10 @@ package com.lafed.taf.ui.pages;
 import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.ui.components.CookieConsentComponent;
 import com.lafed.taf.ui.components.HeaderComponent;
+import java.time.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HomePage extends BasePage {
     private static final By HERO_SECTION = By.cssSelector("#slider");
@@ -15,8 +17,7 @@ public class HomePage extends BasePage {
 
     public HomePage open() {
         openPath("/");
-        waitUtils.untilTitleContains("Automation Exercise");
-        return this;
+        return waitUntilReady();
     }
 
     @Override
@@ -29,6 +30,18 @@ public class HomePage extends BasePage {
 
     public boolean isHeroBannerVisible() {
         return isDisplayed(HERO_SECTION);
+    }
+
+    public boolean hasCoreMarkers() {
+        HeaderComponent header = header();
+        return header.isLogoVisible() && isDisplayed(HERO_SECTION);
+    }
+
+    public HomePage waitUntilReady() {
+        waitUtils.untilTitleContains("Automation Exercise");
+        new WebDriverWait(driver, Duration.ofSeconds(config.getExplicitTimeoutSeconds()))
+                .until(ignored -> hasCoreMarkers());
+        return this;
     }
 
     public boolean isLoggedInAs(String userName) {

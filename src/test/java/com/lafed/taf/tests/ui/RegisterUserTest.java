@@ -30,13 +30,13 @@ public class RegisterUserTest extends BaseUiTest {
 
             AccountCreatedPage accountCreatedPage = new SignupFlow(loginPage).register(user);
             UiAssertions.assertTrue(accountCreatedPage.isLoaded(), "Account created confirmation page should be displayed.");
-            UiAssertions.assertContains(
-                    accountCreatedPage.confirmationMessage(),
-                    "Account Created",
+            UiAssertions.assertTrue(
+                    accountCreatedPage.normalizedConfirmationMessage().contains("account created"),
                     "Account creation confirmation should be visible.");
 
             HomePage loggedInHomePage = accountCreatedPage.continueToHomePage();
             loggedInHomePage.cookieConsent().acceptIfPresent();
+            loggedInHomePage.waitUntilReady();
             UiAssertions.assertTrue(loggedInHomePage.isLoaded(), "User should return to the home page after account creation.");
             UiAssertions.assertTrue(
                     loggedInHomePage.isLoggedInAs(user.getName()),

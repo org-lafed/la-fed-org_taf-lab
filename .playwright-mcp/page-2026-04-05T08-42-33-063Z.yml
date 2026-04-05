@@ -1,0 +1,182 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "Website for automation practice" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - img "Website for automation practice" [ref=e9]
+      - list [ref=e12]:
+        - listitem [ref=e13]:
+          - link " Home" [ref=e14] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e15]: 
+            - text: Home
+        - listitem [ref=e16]:
+          - link " Products" [ref=e17] [cursor=pointer]:
+            - /url: /products
+            - generic [ref=e18]: 
+            - text: Products
+        - listitem [ref=e19]:
+          - link " Cart" [ref=e20] [cursor=pointer]:
+            - /url: /view_cart
+            - generic [ref=e21]: 
+            - text: Cart
+        - listitem [ref=e22]:
+          - link " Signup / Login" [ref=e23] [cursor=pointer]:
+            - /url: /login
+            - generic [ref=e24]: 
+            - text: Signup / Login
+        - listitem [ref=e25]:
+          - link " Test Cases" [ref=e26] [cursor=pointer]:
+            - /url: /test_cases
+            - generic [ref=e27]: 
+            - text: Test Cases
+        - listitem [ref=e28]:
+          - link " API Testing" [ref=e29] [cursor=pointer]:
+            - /url: /api_list
+            - generic [ref=e30]: 
+            - text: API Testing
+        - listitem [ref=e31]:
+          - link " Video Tutorials" [ref=e32] [cursor=pointer]:
+            - /url: https://www.youtube.com/c/AutomationExercise
+            - generic [ref=e33]: 
+            - text: Video Tutorials
+        - listitem [ref=e34]:
+          - link " Contact us" [ref=e35] [cursor=pointer]:
+            - /url: /contact_us
+            - generic [ref=e36]: 
+            - text: Contact us
+  - generic [ref=e39]:
+    - generic [ref=e40]:
+      - generic [ref=e41]:
+        - heading "Category" [level=2] [ref=e42]
+        - generic [ref=e43]:
+          - heading " Women" [level=4] [ref=e46]:
+            - link " Women" [ref=e47] [cursor=pointer]:
+              - /url: "#Women"
+              - generic [ref=e49]: 
+              - text: Women
+          - heading " Men" [level=4] [ref=e52]:
+            - link " Men" [ref=e53] [cursor=pointer]:
+              - /url: "#Men"
+              - generic [ref=e55]: 
+              - text: Men
+          - heading " Kids" [level=4] [ref=e58]:
+            - link " Kids" [ref=e59] [cursor=pointer]:
+              - /url: "#Kids"
+              - generic [ref=e61]: 
+              - text: Kids
+        - generic [ref=e62]:
+          - heading "Brands" [level=2] [ref=e63]
+          - list [ref=e65]:
+            - listitem [ref=e66]:
+              - link "(6) Polo" [ref=e67] [cursor=pointer]:
+                - /url: /brand_products/Polo
+                - generic [ref=e68]: (6)
+                - text: Polo
+            - listitem [ref=e69]:
+              - link "(5) H&M" [ref=e70] [cursor=pointer]:
+                - /url: /brand_products/H&M
+                - generic [ref=e71]: (5)
+                - text: H&M
+            - listitem [ref=e72]:
+              - link "(5) Madame" [ref=e73] [cursor=pointer]:
+                - /url: /brand_products/Madame
+                - generic [ref=e74]: (5)
+                - text: Madame
+            - listitem [ref=e75]:
+              - link "(3) Mast & Harbour" [ref=e76] [cursor=pointer]:
+                - /url: /brand_products/Mast & Harbour
+                - generic [ref=e77]: (3)
+                - text: Mast & Harbour
+            - listitem [ref=e78]:
+              - link "(4) Babyhug" [ref=e79] [cursor=pointer]:
+                - /url: /brand_products/Babyhug
+                - generic [ref=e80]: (4)
+                - text: Babyhug
+            - listitem [ref=e81]:
+              - link "(3) Allen Solly Junior" [ref=e82] [cursor=pointer]:
+                - /url: /brand_products/Allen Solly Junior
+                - generic [ref=e83]: (3)
+                - text: Allen Solly Junior
+            - listitem [ref=e84]:
+              - link "(3) Kookie Kids" [ref=e85] [cursor=pointer]:
+                - /url: /brand_products/Kookie Kids
+                - generic [ref=e86]: (3)
+                - text: Kookie Kids
+            - listitem [ref=e87]:
+              - link "(5) Biba" [ref=e88] [cursor=pointer]:
+                - /url: /brand_products/Biba
+                - generic [ref=e89]: (5)
+                - text: Biba
+      - generic:
+        - insertion:
+          - generic:
+            - iframe
+    - generic [ref=e90]:
+      - generic [ref=e91]:
+        - img "ecommerce website products" [ref=e94]
+        - generic [ref=e96]:
+          - img "ecommerce website products" [ref=e97]
+          - heading "Blue Top" [level=2] [ref=e98]
+          - paragraph [ref=e99]: "Category: Women > Tops"
+          - img "ecommerce website products" [ref=e100]
+          - generic [ref=e101]:
+            - generic [ref=e102]: Rs. 500
+            - generic [ref=e103]: "Quantity:"
+            - spinbutton [ref=e104]: "1"
+            - button " Add to cart" [ref=e105] [cursor=pointer]:
+              - generic [ref=e106]: 
+              - text: Add to cart
+          - paragraph [ref=e107]: "Availability: In Stock"
+          - paragraph [ref=e108]: "Condition: New"
+          - paragraph [ref=e109]: "Brand: Polo"
+      - generic [ref=e110]:
+        - list [ref=e112]:
+          - listitem [ref=e113]:
+            - link "Write Your Review" [ref=e114]:
+              - /url: "#reviews"
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - textbox "Your Name" [ref=e118]
+            - textbox "Email Address" [ref=e119]
+          - textbox "Add Review Here!" [ref=e120]
+          - button "Submit" [ref=e121] [cursor=pointer]
+  - contentinfo [ref=e122]:
+    - generic [ref=e127]:
+      - heading "Subscription" [level=2] [ref=e128]
+      - generic [ref=e129]:
+        - textbox "Your email address" [ref=e130]
+        - button "" [ref=e131] [cursor=pointer]:
+          - generic [ref=e132]: 
+        - paragraph [ref=e133]:
+          - text: Get the most recent updates from
+          - text: our site and be updated your self...
+    - paragraph [ref=e137]: Copyright © 2021 All rights reserved
+    - generic [ref=e139]:
+      - button "Paramètres concernant la confidentialité et les cookies" [ref=e140] [cursor=pointer]
+      - generic [ref=e141]: "Géré par Google. Conforme au TCF de l'IAB. ID de CMP : 300"
+  - text: 
+  - insertion [ref=e142]:
+    - iframe [ref=e145]:
+      - iframe [ref=f278e1]:
+        - generic [active]:
+          - generic [ref=f281e1]:
+            - generic [ref=f281e2]:
+              - generic:
+                - img [ref=f281e6] [cursor=pointer]
+                - button [ref=f281e9] [cursor=pointer]:
+                  - img [ref=f281e10]
+            - generic [ref=f281e17]:
+              - link "Click Here" [ref=f281e18] [cursor=pointer]:
+                - /url: https://googleads.g.doubleclick.net/dbm/clk?sa=L&ai=C6Xp2diDSaeGoMIGMv_IPta7vyAf_pd30evDLhbv5EfSI7crORRABIP20npUBYPsBoAGsso-gAcgBCagDAcgDmwSqBP8BT9B0MONJwfC5tdyjtUQfFM4ynZs4ZVMM52syvv-Id3bJ-BPEJZb7f0dhQeXxt9eRcl_HPbJCBJrjJNyebVLQTilFRn8FycsRK6TBiwcXfo6d9YZJwjMLgbLDvq_uVqntQxq03oKwjfc8oy9X5IBF3CyZHrcn9t9OExPZOnIOLjscYKsJaSOYIebtr_229jd_yRUZYp564tgl3Vwu3BLsmZbzw11lSxdnnTyCNSfUCNxqsl75_s-W7lszpCBm7-T_hEqJbRT5A7IF12X415R-DiZe_ci8rssPK5Z-T7Luv7aSwA5Z5pekSZXO_QiW03LmeCowfGP7CoqkwdYyDUdXwATvrODkqQTgBAOIBc7dxMhKkAYBoAZNgAe8zfDfAqgHp8yxAqgHpr4bqAfMzrECqAfz0RuoB5bYG6gHqpuxAqgHjs4bqAeT2BuoB_DgG6gH7paxAqgH_p6xAqgHr76xAqgH1ckbqAfZtrECqAeaBqgH_56xAqgH35-xAqgH-MKxAqgH-8KxAqgH59exAtgHANIIMgiA4YAQEAEYnwMyCKqCgICAgIAIOg6AwAOAgISAgJSu4AOoB0i9_cE6WI-I8b6o1pMDgAoBmAsByAsBgAwBqg0CRlLqDRMI-MDyvqjWkwMVAcZPCB011xt58A0BiA4JsBPAitMh0BMA2BMN2BQB0BUByhYCCgD4FgGAFwGyFwQYAlAGshgJEgKdYxhNIgEA0BkB2BkB&ae=1&num=1&cid=CAQSbwAFq6B90OfkQiJEmGluHL8P34LflxfMKt_Q28ksmA4XtU7wePM_fYuXAET9h_XKWxyuP-KuO5-8OjHmYlpDV6tQ-Fm1A-8H_18Dqh9ivVph3HYjlHn6B0HptRWf7etzTRDI2TzPolcuLM5oymSPfhgB&sig=AOD64_3zCAPABe2p-4QB5fFufysVHACXAQ&client=ca-pub-1677597403311019&dbm_c=AKAmf-BK0iuFLhFrc2HF-ks0VUu-6IRUWID3cq8lr_KlcxYJUsTSbRiDQyLE0TDxfbtScawY5PPnWzXoOk8OJKIzXh1hy_1CEretBpL96fOpugwj9iAngCdiR3AlbGs9EUGfsel6o2JMKK8rKuTsOEAuTau-0b9aZAbvdSkzkshB0438JnZekb5ymT4guuTc3Bj3suuXuHPXLkSXIneogKslGYoZORFe0eAOeskavFqfqALACkzzo7UMSTjEf5O2j-dZpXhcUDoceBHm7n-2EPlM9hT0OvKbcWzutAy-pf6vaqcd0ROu4UQ&cry=1&dbm_d=AKAmf-B68lJz4cfaFL68ntOzFoUHj1GZCqzphV8iCr_oU7N-W4k2wjW_-Vte493xVNULLbfxQcvkcpqmbz9qsQ67tyFJjs4RVadxBGdIowjZfb4jnXuY9GS_tGQbI3sT1B6DWNJiPfRWjtATptG_MwPsN61_oWnNFuWJ3fF_To4i22bFv2jCdS-oI107P-7Ng_iQJnwy_CCF6DTlFW3HdEsqID1MsbFrvaBQDAsO_15B1YO8WUBQQx-xhZd_Mhbhg5eV1uzhmXY6Axz8ZLXAqYqbD04h-yb7wQIJS-Ke_9Fjg_8N62Hi7Lp4uI0GpnbRoxIakeoU7xV8c5mm7_atJ7D0CTgibRGJPxFZeoevRt00ehFpnumN3pfRpNngPkh3BtiWCX9ltCpPHh0ZquUYwTAJRVdOKq4Vfx0_Y3kiPLsFf4ypCm2XDMBxMGS6iLW3BDbNtIJ9TlZY7ygR-9PrCKQL3I2YiueAltNRP1MpeiELc97gL3FLeE_6g8E-dGoFZ8X68D_r2n2O7W1tsZdp-eJiSzK-RGeU3vNTpSxrIcs2jgS2djdECCUBeQuQAPa6MxHrj46iTS7X8J1on5LH8UZMauWYH01KHgQnfTQPDd_iq-8CfKgAKuQ8nAs6c_esrlCl9wj2mup4OtFkOI8qxi55teaaLdM4uxGt_dPtubKevhF7Hc-3RkiYhNqLZvyqCmgWuMSAQEJx2T8afHAY-6S-c02FJ202hw&adurl=https://servedby.flashtalking.com/click/1/225039;7938753;5959982;210;0/?us_privacy=!!US_PRIVACY!&gdpr_consent=CQiMHwAQiMHwAEsACBFRCZFoAP_gAEPgABBoK3oB_C7EbCFCiDJ3IKMEMAhHABBAYsAwAAYBAwAADBIQIAQCgkEYBASAFCACCAAAKASBAAAgCAAAAUAAIAAFAABAAAwAIBAIIAAAgAAAAEAIAAAACIAAEQCAAAAEAEAAkAgAAAIASEAAAAAAAACBAAAAAAAAAAAAAAAABAEAAQAAQAAAAAAAiAAAAAAAABAIAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAQgsIgH8LsRsIUKIMFcgowQwCFcAEABiwDAABgEDAAAMEhAgBAKSQRIEAIAQIAAIAAAgBAEAACgICAAAQAAAABUAAEAADAAgEAgAQACAAABAQAAAAAAIgAARAIAAAAQAQACACAAAAgBIQAAAAAAAAIEAAAAAAAAAAAAAAAAAAQAAIADAAAAAAACIAAAAAAAAEAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAQAA.ILCIB_C7EbCFCiDJ3IKMEMAhXABBAYsAwAAYBAwAADBIQIAQCkkEaBASAFCACCAAAKASBAAAoCAgAAUAAIAAVAABAAAwAIBAIIEAAgAAAQEAIAAAACIAAEQCAAAAEAEAAkAgAAAIASEAAAAAAAACBAAAAAAAAAAAAAAAABAEAASAAwAAAAAAAiAAAAAAAABAIEAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAQgAAE&gdpr=1&ft_partnerimpid=ABAjH0idUmDY2rJCMRbXZiLD9rr9&ft_impID=E0E27E27-7E68-2353-993D-42C21D8D6056&g=6669B9D0F9C0DD&random=618290.137606876&ft_width=728&ft_height=90&url=https://www.adobe.com/fr/creativecloud/plans.html?plan=edu&sdid=98SH4JVR&mv=display&mv2=display
+                - img "Click Here" [ref=f281e19]
+              - link "AdChoices arrow" [ref=f281e21] [cursor=pointer]:
+                - /url: https://www.flashtalking.com/consumer-privacy
+                - img "AdChoices arrow" [ref=f281e22]
+              - link "Privacy Notification" [ref=f281e24] [cursor=pointer]:
+                - /url: https://www.flashtalking.com/consumer-privacy
+                - img [ref=f281e25]
+              - link "Privacy Notification" [ref=f281e27] [cursor=pointer]:
+                - /url: https://www.flashtalking.com/consumer-privacy
+                - img [ref=f281e28]
+          - iframe

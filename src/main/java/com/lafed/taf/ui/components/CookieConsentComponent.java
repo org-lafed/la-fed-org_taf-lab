@@ -4,9 +4,9 @@ import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.ui.pages.BasePage;
 import java.util.List;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class CookieConsentComponent extends BasePage {
     private static final By CONSENT_BUTTON = By.cssSelector("button.fc-cta-consent");
@@ -23,32 +23,37 @@ public class CookieConsentComponent extends BasePage {
 
     @Override
     public boolean isLoaded() {
-        return KNOWN_ACCEPT_BUTTONS.stream().anyMatch(this::isDisplayedSafely);
+        return KNOWN_ACCEPT_BUTTONS.stream().anyMatch(this::hasVisibleConsentButton);
     }
 
     public void acceptIfPresent() {
+        KNOWN_ACCEPT_BUTTONS.stream()
+                .map(this::findVisibleElement)
+                .filter(element -> element != null)
+                .findFirst()
+                .ifPresent(this::clickDirectlyIfPossible);
+    }
+
+    private boolean hasVisibleConsentButton(By locator) {
+        return isDisplayedSafely(locator);
+    }
+
+    private WebElement findVisibleElement(By locator) {
         try {
-            KNOWN_ACCEPT_BUTTONS.stream()
-                    .filter(this::isDisplayedSafely)
+            return driver.findElements(locator).stream()
+                    .filter(WebElement::isDisplayed)
                     .findFirst()
-                    .ifPresent(locator -> {
-                        click(locator);
-                        waitForBannerToDisappear(locator);
-                    });
-        } catch (StaleElementReferenceException | ElementClickInterceptedException ignored) {
-            // Tolerate ephemeral cookie banners that disappear before interaction.
+                    .orElse(null);
+        } catch (StaleElementReferenceException ignored) {
+            return null;
         }
     }
 
-    private void waitForBannerToDisappear(By locator) {
+    private void clickDirectlyIfPossible(WebElement element) {
         try {
-            waitUtils.untilInvisible(locator);
+            element.click();
         } catch (RuntimeException ignored) {
-            // Keep tests moving if the consent layer closes asynchronously.
+            // Keep cookie consent best-effort and non-blocking.
         }
-    }
-
-    private boolean isDisplayedSafely(By locator) {
-        return !driver.findElements(locator).isEmpty() && driver.findElement(locator).isDisplayed();
     }
 }

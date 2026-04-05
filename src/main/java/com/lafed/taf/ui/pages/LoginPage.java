@@ -62,6 +62,7 @@ public class LoginPage extends BasePage {
 
     public SignupPage startSignup() {
         click(SIGNUP_BUTTON);
-        return new SignupPage(driver, config);
+        SignupPage signupPage = new SignupPage(driver, config);
+        return signupPage.waitUntilReady();
     }
 }

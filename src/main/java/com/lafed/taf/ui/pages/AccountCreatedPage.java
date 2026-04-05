@@ -1,8 +1,11 @@
 package com.lafed.taf.ui.pages;
 
 import com.lafed.taf.config.ExecutionConfig;
+import java.time.Duration;
+import java.util.Locale;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class AccountCreatedPage extends BasePage {
     private static final By ACCOUNT_CREATED_HEADER = By.cssSelector("h2[data-qa='account-created']");
@@ -21,8 +24,19 @@ public class AccountCreatedPage extends BasePage {
         return textOf(ACCOUNT_CREATED_HEADER);
     }
 
+    public String normalizedConfirmationMessage() {
+        return confirmationMessage()
+                .replaceAll("[^A-Za-z0-9\\s]", " ")
+                .replaceAll("\\s+", " ")
+                .trim()
+                .toLowerCase(Locale.ROOT);
+    }
+
     public HomePage continueToHomePage() {
         click(CONTINUE_BUTTON);
-        return new HomePage(driver, config);
+        HomePage homePage = new HomePage(driver, config);
+        new WebDriverWait(driver, Duration.ofSeconds(config.getExplicitTimeoutSeconds()))
+                .until(ignored -> homePage.hasCoreMarkers());
+        return homePage;
     }
 }

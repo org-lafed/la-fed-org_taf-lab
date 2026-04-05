@@ -5,7 +5,7 @@ Minimal Java Maven Test Automation Framework for demonstration on [automationexe
 ## Current Scope
 
 - Stable demonstrator coverage for the home page smoke flow and the products API path.
-- Implemented UI regression scenarios for signup happy path, valid login, and product search.
+- Implemented UI regression scenarios for signup happy path, valid login, product search, product details, remove from cart, footer subscription, and contact us with upload.
 - Checkout-oriented E2E remains an explicit placeholder until live checkout locator validation is completed.
 - Build output and local dependency caches are intentionally ignored and are not part of the versioned source.
 
@@ -55,6 +55,12 @@ Smoke suite:
 mvn clean test -DsuiteXmlFile=src/test/resources/suites/smoke.xml -Denv=local
 ```
 
+Smoke suite on macOS with an explicit Chrome binary:
+
+```bash
+mvn clean test -DsuiteXmlFile=src/test/resources/suites/smoke.xml -Denv=local -Dbrowser=chrome -Dbrowser.binary.path="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+```
+
 UI regression:
 
 ```bash
@@ -79,9 +85,16 @@ Useful environment variable overrides:
 - `TAF_BASE_URL`
 - `TAF_API_BASE_URL`
 - `TAF_BROWSER`
+- `TAF_BROWSER_BINARY`
 - `TAF_HEADLESS`
 - `TAF_EXPLICIT_TIMEOUT_SECONDS`
 - `TAF_SCREENSHOT_ON_FAILURE`
+
+## Browser Notes
+
+- Chrome accepts an optional binary override through `browser.binary.path` or `TAF_BROWSER_BINARY`.
+- On macOS, if no explicit Chrome path is provided, the framework also checks common application locations such as `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`.
+- Edge now relies on Selenium Manager through `new EdgeDriver(...)` rather than `WebDriverManager.edgedriver().setup()`, which avoids separate Edge driver resolution through WebDriverManager.
 
 ## Reports
 

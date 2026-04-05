@@ -11,6 +11,10 @@
             <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
             <class name="com.lafed.taf.tests.ui.ValidLoginTest"/>
             <class name="com.lafed.taf.tests.ui.SearchProductTest"/>
+            <class name="com.lafed.taf.tests.ui.ProductDetailsTest"/>
+            <class name="com.lafed.taf.tests.ui.RemoveFromCartTest"/>
+            <class name="com.lafed.taf.tests.ui.SubscriptionTest"/>
+            <class name="com.lafed.taf.tests.ui.ContactUsUploadTest"/>
         </classes>
     </test>
 </suite>

@@ -7,7 +7,6 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.ObjectMapperConfig;
 import io.restassured.config.RestAssuredConfig;
-import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import io.restassured.specification.RequestSpecification;
 
@@ -26,8 +25,6 @@ public final class ApiClientFactory {
 
         return new RequestSpecBuilder()
                 .setBaseUri(config.getApiBaseUrl())
-                .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
                 .setRelaxedHTTPSValidation()
                 .setConfig(RestAssuredConfig.config().objectMapperConfig(
                         new ObjectMapperConfig().jackson2ObjectMapperFactory((type, charset) -> objectMapper)))
