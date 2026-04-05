@@ -9,6 +9,8 @@
         <classes>
             <class name="com.lafed.taf.tests.ui.HomePageSmokeTest"/>
             <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
+            <class name="com.lafed.taf.tests.ui.ValidLoginTest"/>
+            <class name="com.lafed.taf.tests.ui.SearchProductTest"/>
         </classes>
     </test>
 </suite>

@@ -1,9 +1,12 @@
 package com.lafed.taf.api.services;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lafed.taf.api.clients.AutomationExerciseApiClient;
 import com.lafed.taf.api.models.ApiResponse;
 import com.lafed.taf.api.models.User;
 import io.restassured.response.Response;
+import java.io.IOException;
 import java.util.Map;
 
 public class UserApiService {
@@ -12,9 +15,11 @@ public class UserApiService {
     private static final String GET_ACCOUNT_DETAILS_PATH = "/api/getUserDetailByEmail";
 
     private final AutomationExerciseApiClient apiClient;
+    private final ObjectMapper objectMapper;
 
     public UserApiService(AutomationExerciseApiClient apiClient) {
         this.apiClient = apiClient;
+        this.objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public Response createUserResponse(User user) {
@@ -22,7 +27,7 @@ public class UserApiService {
     }
 
     public ApiResponse createUser(User user) {
-        return createUserResponse(user).as(ApiResponse.class);
+        return parseApiResponse(createUserResponse(user));
     }
 
     public Response deleteUserResponse(String email, String password) {
@@ -30,10 +35,18 @@ public class UserApiService {
     }
 
     public ApiResponse deleteUser(String email, String password) {
-        return deleteUserResponse(email, password).as(ApiResponse.class);
+        return parseApiResponse(deleteUserResponse(email, password));
     }
 
     public Response getUserByEmailResponse(String email) {
         return apiClient.get(GET_ACCOUNT_DETAILS_PATH, Map.of("email", email));
+    }
+
+    public ApiResponse parseApiResponse(Response response) {
+        try {
+            return objectMapper.readValue(response.getBody().asString(), ApiResponse.class);
+        } catch (IOException exception) {
+            throw new IllegalStateException("Unable to deserialize user API response body.", exception);
+        }
     }
 }

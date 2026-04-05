@@ -4,8 +4,8 @@ Minimal Java Maven Test Automation Framework for demonstration on [automationexe
 
 ## Current Scope
 
-- Stable demonstrator coverage for the home page smoke path and products API path.
-- Registration and API-to-UI checkout remain explicit placeholders until live locator validation is completed.
+- Stable demonstrator coverage for home page smoke, signup happy path, valid login, product list visibility, product search, and the products API path.
+- Checkout-oriented E2E remains an explicit placeholder until live checkout locator validation is completed.
 - Build output and local dependency caches are intentionally ignored and are not part of the versioned source.
 
 ## Purpose
@@ -47,6 +47,12 @@ Smoke suite:
 
 ```bash
 mvn clean test -DsuiteXmlFile=src/test/resources/suites/smoke.xml -Denv=local
+```
+
+UI regression:
+
+```bash
+mvn clean test -DsuiteXmlFile=src/test/resources/suites/ui-regression.xml -Denv=local
 ```
 
 API regression:

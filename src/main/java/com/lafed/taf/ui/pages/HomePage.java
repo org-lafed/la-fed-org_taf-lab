@@ -31,6 +31,10 @@ public class HomePage extends BasePage {
         return isDisplayed(HERO_SECTION);
     }
 
+    public boolean isLoggedInAs(String userName) {
+        return header().isLoggedInAs(userName);
+    }
+
     public HeaderComponent header() {
         return new HeaderComponent(driver, config);
     }

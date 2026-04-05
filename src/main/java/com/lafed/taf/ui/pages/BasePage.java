@@ -2,6 +2,7 @@ package com.lafed.taf.ui.pages;
 
 import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.core.utils.WaitUtils;
+import com.lafed.taf.ui.components.CookieConsentComponent;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -52,6 +53,10 @@ public abstract class BasePage {
 
     protected String textOf(By locator) {
         return find(locator).getText().trim();
+    }
+
+    public CookieConsentComponent cookieConsent() {
+        return new CookieConsentComponent(driver, config);
     }
 
     public String currentUrl() {

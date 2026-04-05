@@ -31,6 +31,7 @@ maven-settings.xml
 .gradle/
 .history/
 .idea_modules/
+.playwright-cli/
 bin/
 tmp/
 temp/

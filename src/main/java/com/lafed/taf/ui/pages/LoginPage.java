@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
+    private static final By LOGIN_FORM_HEADER = By.cssSelector(".login-form h2");
+    private static final By SIGNUP_FORM_HEADER = By.cssSelector(".signup-form h2");
     private static final By LOGIN_EMAIL_INPUT = By.cssSelector("input[data-qa='login-email']");
     private static final By LOGIN_PASSWORD_INPUT = By.cssSelector("input[data-qa='login-password']");
     private static final By LOGIN_BUTTON = By.cssSelector("button[data-qa='login-button']");
@@ -23,7 +25,14 @@ public class LoginPage extends BasePage {
 
     @Override
     public boolean isLoaded() {
-        return isDisplayed(LOGIN_EMAIL_INPUT) && isDisplayed(SIGNUP_NAME_INPUT);
+        return isDisplayed(LOGIN_FORM_HEADER)
+                && isDisplayed(SIGNUP_FORM_HEADER)
+                && isDisplayed(LOGIN_EMAIL_INPUT)
+                && isDisplayed(LOGIN_PASSWORD_INPUT)
+                && isDisplayed(LOGIN_BUTTON)
+                && isDisplayed(SIGNUP_NAME_INPUT)
+                && isDisplayed(SIGNUP_EMAIL_INPUT)
+                && isDisplayed(SIGNUP_BUTTON);
     }
 
     public LoginPage enterLoginEmail(String email) {
