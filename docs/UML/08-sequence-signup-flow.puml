@@ -1,0 +1,60 @@
+@startuml
+title Sequence - Signup Flow Target V1
+
+skinparam shadowing false
+
+actor "RegisterUserTest\n(Target V1 View)" as TEST
+participant "FakeDataGenerator" as FDG
+participant "UserDataBuilder" as UDB
+participant "HomePage" as HP
+participant "LoginPage" as LP
+participant "SignupFlow" as SF
+participant "SignupPage" as SP
+participant "AccountCreatedPage" as ACP
+participant "StateStore" as SS
+participant "UserApiService" as UAS
+participant "Automation Exercise UI" as UI
+participant "Automation Exercise API" as API
+
+TEST -> FDG : timestamp()
+TEST -> UDB : aUser().withName(...)\n.withPassword(...).build()
+UDB --> TEST : User
+
+TEST -> HP : open()
+HP -> UI : GET /
+UI --> HP : home page DOM
+TEST -> HP : openLoginPage()
+HP --> TEST : LoginPage
+
+TEST -> SF : register(user)
+SF -> LP : enterSignupName(user.name)
+SF -> LP : enterSignupEmail(user.email)
+SF -> LP : startSignup()
+LP -> UI : submit signup start
+UI --> SP : signup form loaded
+SF -> SP : fillAccountDetails(user)
+SF -> SP : submitAccountCreation()
+SP -> UI : submit account form
+UI --> ACP : account created page
+SF --> TEST : AccountCreatedPage
+
+TEST -> ACP : continueToHomePage()
+ACP -> UI : continue navigation
+UI --> HP : logged-in home page
+TEST -> SS : put("registeredUserEmail", user.email)
+
+opt Best-effort cleanup
+  TEST -> UAS : deleteUser(user.email, user.password)
+  UAS -> API : DELETE /api/deleteAccount
+  API --> UAS : ApiResponse
+end
+
+note right of SS
+State persistence is shown as the
+target V1 handoff model. The current
+registration test already cleans up
+through UserApiService but does not
+yet rely on StateStore for the flow.
+end note
+
+@enduml

@@ -4,7 +4,8 @@ Minimal Java Maven Test Automation Framework for demonstration on [automationexe
 
 ## Current Scope
 
-- Stable demonstrator coverage for home page smoke, signup happy path, valid login, product list visibility, product search, and the products API path.
+- Stable demonstrator coverage for the home page smoke flow and the products API path.
+- Implemented UI regression scenarios for signup happy path, valid login, and product search.
 - Checkout-oriented E2E remains an explicit placeholder until live checkout locator validation is completed.
 - Build output and local dependency caches are intentionally ignored and are not part of the versioned source.
 
@@ -40,6 +41,11 @@ Minimal Java Maven Test Automation Framework for demonstration on [automationexe
 - `tests/ui`, `tests/api`, `tests/e2e`: runnable TestNG tests only.
 
 See the concise project documentation in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and related files.
+
+## Modeling
+
+- UML package and execution views: [docs/UML/00-modeling-overview.md](docs/UML/00-modeling-overview.md)
+- UTP2-oriented test modeling: [docs/UTP2/00-utp2-overview.md](docs/UTP2/00-utp2-overview.md)
 
 ## How To Run
 

@@ -1,0 +1,80 @@
+@startuml
+title TAF Lab - Use Case Diagram
+
+left to right direction
+skinparam shadowing false
+
+actor "QA Engineer" as QA
+actor "CI Runner" as CI
+actor "Automation Exercise UI" as WebSUT
+actor "Automation Exercise API" as ApiSUT
+
+rectangle "Framework Execution Use Cases" {
+  usecase "Run Smoke Suite" as UC1
+  usecase "Run UI Regression Suite" as UC2
+  usecase "Run API Regression Suite" as UC3
+  usecase "Run Full Regression Suite" as UC4
+  usecase "Load Execution Config" as UC5
+  usecase "Provision Browser Session" as UC6
+  usecase "Provision API Client" as UC7
+  usecase "Capture Evidence\n(Allure + Surefire)" as UC8
+  usecase "Capture Screenshot on UI Failure" as UC9
+}
+
+rectangle "Tested Business Scenarios" {
+  usecase "Validate Home Page Smoke" as UC10
+  usecase "Validate Products Catalog API" as UC11
+  usecase "Register New User\n(Happy Path)" as UC12
+  usecase "Login With Valid Seeded User" as UC13
+  usecase "Search Products Via UI" as UC14
+  usecase "Reach Checkout After API/UI Setup" as UC15
+}
+
+QA --> UC1
+QA --> UC2
+QA --> UC3
+QA --> UC4
+CI --> UC1
+CI --> UC3
+CI --> UC4
+
+UC1 .> UC5 : <<include>>
+UC1 .> UC6 : <<include>>
+UC1 .> UC8 : <<include>>
+UC1 .> UC9 : <<extend>>
+UC1 .> UC10 : <<include>>
+
+UC2 .> UC5 : <<include>>
+UC2 .> UC6 : <<include>>
+UC2 .> UC7 : <<include>>
+UC2 .> UC8 : <<include>>
+UC2 .> UC9 : <<extend>>
+UC2 .> UC12 : <<include>>
+UC2 .> UC13 : <<include>>
+UC2 .> UC14 : <<include>>
+
+UC3 .> UC5 : <<include>>
+UC3 .> UC7 : <<include>>
+UC3 .> UC8 : <<include>>
+UC3 .> UC11 : <<include>>
+
+UC4 .> UC1 : <<include>>
+UC4 .> UC2 : <<include>>
+UC4 .> UC3 : <<include>>
+UC4 .> UC15 : <<include>>
+
+WebSUT --> UC10
+WebSUT --> UC12
+WebSUT --> UC13
+WebSUT --> UC14
+WebSUT --> UC15
+ApiSUT --> UC11
+ApiSUT --> UC15
+
+note right of UC15
+Target V1 business scenario.
+Current repository keeps the checkout
+test class as an explicit skipped placeholder.
+end note
+
+@enduml

@@ -1,0 +1,125 @@
+@startuml
+title TAF Lab - Core Execution Class Diagram
+
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+class ExecutionConfig {
+  -env : String
+  -baseUrl : String
+  -apiBaseUrl : String
+  -browser : String
+  -headless : boolean
+  -windowWidth : int
+  -windowHeight : int
+  -explicitTimeoutSeconds : int
+  -pageLoadTimeoutSeconds : int
+  -screenshotOnFailure : boolean
+  +getEnv() : String
+  +getBaseUrl() : String
+  +getApiBaseUrl() : String
+  +getBrowser() : String
+  +isHeadless() : boolean
+  +getWindowWidth() : int
+  +getWindowHeight() : int
+  +getExplicitTimeoutSeconds() : int
+  +getPageLoadTimeoutSeconds() : int
+  +isScreenshotOnFailure() : boolean
+}
+
+class ConfigManager {
+  -config : ExecutionConfig
+  +getConfig() : ExecutionConfig
+  +load() : ExecutionConfig
+  +reset() : void
+}
+
+class DriverFactory {
+  +createDriver(config: ExecutionConfig) : WebDriver
+}
+
+class DriverManager {
+  -DRIVER_HOLDER : ThreadLocal<WebDriver>
+  +createDriver(config: ExecutionConfig) : WebDriver
+  +getDriver() : WebDriver
+  +quitDriver() : void
+}
+
+class StateStore {
+  -STATE : ThreadLocal<Map>
+  +put(key: String, value: Object) : void
+  +get(key: String, type: Class) : Object
+  +getRequired(key: String, type: Class) : Object
+  +remove(key: String) : void
+  +clear() : void
+}
+
+class ApiClientFactory {
+  +create(config: ExecutionConfig) : RequestSpecification
+}
+
+class WaitUtils {
+  +untilVisible(locator: By) : WebElement
+  +untilClickable(locator: By) : WebElement
+  +untilInvisible(locator: By) : boolean
+  +untilTitleContains(value: String) : boolean
+  +untilUrlContains(value: String) : boolean
+}
+
+class ScreenshotService {
+  +attachScreenshot(driver: WebDriver, name: String) : void
+}
+
+class AllureTestListener
+
+class BaseUiTest {
+  #config : ExecutionConfig
+  #driver : WebDriver
+  #requestSpecification : RequestSpecification
+  +setUpUiTest() : void
+  +tearDownUiTest() : void
+  +deleteUserQuietly(user: User) : void
+}
+
+class BaseApiTest {
+  #config : ExecutionConfig
+  #requestSpecification : RequestSpecification
+  +setUpApiTest() : void
+}
+
+class HomePageSmokeTest {
+  +shouldLoadHomePageAndDisplayCoreNavigation() : void
+}
+
+class GetProductsApiTest {
+  +shouldReturnProductsCatalog() : void
+}
+
+ConfigManager --> ExecutionConfig
+DriverManager --> DriverFactory
+DriverFactory --> ExecutionConfig
+ApiClientFactory --> ExecutionConfig
+WaitUtils --> ExecutionConfig
+AllureTestListener --> ScreenshotService
+AllureTestListener --> DriverManager
+BaseUiTest --> ConfigManager
+BaseUiTest --> DriverManager
+BaseUiTest --> ApiClientFactory
+BaseUiTest --> StateStore
+BaseApiTest --> ConfigManager
+BaseApiTest --> ApiClientFactory
+HomePageSmokeTest --|> BaseUiTest
+GetProductsApiTest --|> BaseApiTest
+
+note right of DriverManager
+Thread-local browser lifecycle keeps
+parallel execution isolation explicit.
+end note
+
+note right of StateStore
+StateStore exists today and is cleared
+per UI test method. Heavier cross-flow
+usage is a V1 evolution concern.
+end note
+
+@enduml

@@ -1,0 +1,40 @@
+@startuml
+title Sequence - Products API Execution
+
+skinparam shadowing false
+
+actor "TestNG" as T
+participant "BaseApiTest" as BAT
+participant "ConfigManager" as CM
+participant "ApiClientFactory" as ACF
+participant "AutomationExerciseApiClient" as CLIENT
+participant "ProductApiService" as PAS
+participant "GetProductsApiTest" as TEST
+participant "Automation Exercise API" as API
+participant "ApiAssertions" as ASSERT
+
+T -> BAT : setUpApiTest()
+BAT -> CM : getConfig()
+CM --> BAT : ExecutionConfig
+BAT -> ACF : create(config)
+ACF --> BAT : RequestSpecification
+BAT -> CLIENT : new AutomationExerciseApiClient(requestSpecification)
+BAT -> PAS : new ProductApiService(client)
+
+T -> TEST : shouldReturnProductsCatalog()
+TEST -> PAS : getAllProductsResponse()
+PAS -> CLIENT : get("/api/productsList", {})
+CLIENT -> API : HTTP GET /api/productsList
+API --> CLIENT : Response
+CLIENT --> PAS : Response
+PAS --> TEST : Response
+
+TEST -> PAS : parseProducts(response)
+PAS --> TEST : ProductsResponse
+TEST -> ASSERT : assertStatusCode(response, 200)
+TEST -> ASSERT : assertResponseCode(productsResponse, 200)
+TEST -> ASSERT : assertProductsPresent(productsResponse)
+TEST -> ASSERT : assertProductHasCoreFields(firstProduct)
+TEST -> ASSERT : assertMatchesSchema(response, "schemas/products-list-schema.json")
+
+@enduml

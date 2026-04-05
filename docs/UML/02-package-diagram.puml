@@ -1,0 +1,137 @@
+@startuml
+title TAF Lab - Layered Package Diagram
+
+skinparam shadowing false
+skinparam packageStyle rectangle
+
+package "config" {
+  class ConfigManager
+  class ExecutionConfig
+}
+
+package "core" {
+  package "driver" {
+    class DriverFactory
+    class DriverManager
+  }
+  package "http" {
+    class ApiClientFactory
+    class AllureRestAssuredFilter
+  }
+  package "listeners" {
+    class AllureSupport
+    class AllureTestListener
+  }
+  package "state" {
+    class StateStore
+  }
+  package "utils" {
+    class WaitUtils
+    class ScreenshotService
+    class ResourceUtils
+  }
+}
+
+package "ui" {
+  package "pages" {
+    class BasePage
+    class HomePage
+    class LoginPage
+    class SignupPage
+    class ProductsPage
+    class CartPage
+    class AccountCreatedPage
+  }
+  package "components" {
+    class HeaderComponent
+    class CookieConsentComponent
+  }
+  package "flows" {
+    class SignupFlow
+    class LoginFlow
+    class CartFlow
+  }
+}
+
+package "api" {
+  package "clients" {
+    class AutomationExerciseApiClient
+  }
+  package "services" {
+    class ProductApiService
+    class UserApiService
+  }
+  package "models" {
+    class ApiResponse
+    class ProductsResponse
+    class Product
+    class ProductCategory
+    class User
+    class UserType
+  }
+  package "assertions" {
+    class ApiAssertions
+  }
+}
+
+package "data" {
+  package "builders" {
+    class UserDataBuilder
+  }
+  package "generators" {
+    class FakeDataGenerator
+  }
+}
+
+package "tests" {
+  package "ui" {
+    class BaseUiTest
+    class HomePageSmokeTest
+    class RegisterUserTest
+    class ValidLoginTest
+    class SearchProductTest
+  }
+  package "api" {
+    class BaseApiTest
+    class GetProductsApiTest
+  }
+  package "e2e" {
+    class BaseE2eTest
+    class ApiToUiCheckoutTest
+  }
+}
+
+ConfigManager --> ExecutionConfig
+DriverManager --> DriverFactory
+ApiClientFactory --> AllureRestAssuredFilter
+AllureTestListener --> ScreenshotService
+BasePage --> WaitUtils
+HomePage --> HeaderComponent
+HomePage --> CookieConsentComponent
+SignupFlow --> LoginPage
+SignupFlow --> SignupPage
+SignupFlow --> AccountCreatedPage
+ProductApiService --> AutomationExerciseApiClient
+UserApiService --> AutomationExerciseApiClient
+ProductsResponse "1" o-- "*" Product
+Product --> ProductCategory
+ProductCategory --> UserType
+BaseUiTest --> ConfigManager
+BaseUiTest --> DriverManager
+BaseUiTest --> StateStore
+BaseUiTest --> UserApiService
+BaseApiTest --> ApiClientFactory
+BaseApiTest --> ProductApiService
+BaseApiTest --> UserApiService
+BaseE2eTest --> BaseUiTest
+BaseE2eTest --> ProductApiService
+BaseE2eTest --> UserApiService
+HomePageSmokeTest --> HomePage
+RegisterUserTest --> SignupFlow
+ValidLoginTest --> LoginFlow
+SearchProductTest --> ProductsPage
+GetProductsApiTest --> ProductApiService
+GetProductsApiTest --> ApiAssertions
+ApiToUiCheckoutTest --> CartFlow
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+title TAF Lab - Context Diagram
+
+skinparam shadowing false
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+
+actor "QA Engineer" as QA
+actor "CI Runner\n(GitHub Actions)" as CI
+
+rectangle "TAF Lab\n(Test System)" as TAF {
+  component "Execution Control\n(Maven + TestNG suites)" as CTRL
+  component "Configuration Layer" as CFG
+  component "Core Runtime\n(driver, waits, state, listeners)" as CORE
+  component "UI Automation Layer" as UI
+  component "API Automation Layer" as API
+  component "Data Support Layer" as DATA
+  component "Reporting Layer\n(Allure + Surefire)" as REP
+}
+
+cloud "Automation Exercise UI" as SUT_UI
+cloud "Automation Exercise API" as SUT_API
+database "Execution Artifacts\nallure-results, surefire-reports" as ART
+
+QA --> CTRL : runs suites locally
+CI --> CTRL : runs suites in pipeline
+CTRL --> CFG : resolves environment
+CTRL --> CORE : initializes runtime
+CORE --> UI
+CORE --> API
+DATA --> UI : test data
+DATA --> API : request payloads
+UI --> SUT_UI : browser interactions
+API --> SUT_API : HTTP requests
+CORE --> REP : status + attachments
+API --> REP : request/response evidence
+REP --> ART
+
+@enduml
