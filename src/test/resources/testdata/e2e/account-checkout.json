@@ -1,0 +1,9 @@
+{
+  "productName": "Blue Top",
+  "comment": "Starter checkout scenario seeded from API and validated in UI.",
+  "cardName": "Demo User",
+  "cardNumber": "4111111111111111",
+  "cvc": "123",
+  "expiryMonth": "12",
+  "expiryYear": "2030"
+}

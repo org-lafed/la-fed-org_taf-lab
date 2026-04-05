@@ -1,0 +1,18 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Full Regression Suite" verbose="1">
+    <suite-files>
+        <suite-file path="smoke.xml"/>
+        <suite-file path="ui-regression.xml"/>
+        <suite-file path="api-regression.xml"/>
+    </suite-files>
+    <test name="E2E Regression">
+        <groups>
+            <run>
+                <include name="e2e"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="com.lafed.taf.tests.e2e.ApiToUiCheckoutTest"/>
+        </classes>
+    </test>
+</suite>

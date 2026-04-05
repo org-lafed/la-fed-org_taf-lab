@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Known Locator Gaps",
+    "matchedStatuses": [
+      "skipped"
+    ],
+    "messageRegex": ".*locator validation.*"
+  },
+  {
+    "name": "Assertion Failures",
+    "matchedStatuses": [
+      "failed"
+    ],
+    "traceRegex": ".*AssertionError.*"
+  },
+  {
+    "name": "Environment Issues",
+    "matchedStatuses": [
+      "broken"
+    ],
+    "traceRegex": ".*SessionNotCreatedException|TimeoutException|ConnectException.*"
+  }
+]

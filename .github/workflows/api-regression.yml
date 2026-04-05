@@ -1,0 +1,43 @@
+name: API Regression
+
+on:
+  push:
+    branches:
+      - main
+      - master
+      - "codex/**"
+  pull_request:
+
+jobs:
+  api-regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Run API regression suite
+        run: mvn -B clean test -DsuiteXmlFile=src/test/resources/suites/api-regression.xml -Denv=ci
+
+      - name: Upload Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-regression-surefire-reports
+          path: target/surefire-reports
+          if-no-files-found: warn
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-regression-allure-results
+          path: target/allure-results
+          if-no-files-found: warn

@@ -1,0 +1,19 @@
+{
+  "name": "Demo UI User",
+  "email": "demo.user+ui@example.test",
+  "password": "ReplaceViaEnvOrBuilder123",
+  "title": "Mrs",
+  "birthDate": "12",
+  "birthMonth": "June",
+  "birthYear": "1994",
+  "firstName": "Demo",
+  "lastName": "User",
+  "company": "LA FED",
+  "address1": "456 Quality Avenue",
+  "address2": "Floor 2",
+  "country": "India",
+  "zipcode": "560001",
+  "state": "KA",
+  "city": "Bengaluru",
+  "mobileNumber": "+919900000000"
+}
