@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class HeaderComponent extends BasePage {
+    private static final By LOGO = By.cssSelector("header .logo img");
     private static final By NAVIGATION_CONTAINER = By.cssSelector("header .shop-menu ul");
     private static final By HOME_LINK = By.cssSelector("header .shop-menu a[href='/']");
     private static final By PRODUCTS_LINK = By.cssSelector("header .shop-menu a[href='/products']");
@@ -19,6 +20,10 @@ public class HeaderComponent extends BasePage {
     @Override
     public boolean isLoaded() {
         return isDisplayed(NAVIGATION_CONTAINER);
+    }
+
+    public boolean isLogoVisible() {
+        return isDisplayed(LOGO);
     }
 
     public boolean hasCoreNavigationLinks() {

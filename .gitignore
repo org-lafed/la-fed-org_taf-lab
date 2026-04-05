@@ -27,3 +27,10 @@ test-output/
 .m2/
 .wdm/
 maven-settings.xml
+.cache/
+.gradle/
+.history/
+.idea_modules/
+bin/
+tmp/
+temp/

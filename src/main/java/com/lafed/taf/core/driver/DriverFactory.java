@@ -37,7 +37,9 @@ public final class DriverFactory {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-notifications");
+        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--incognito");
+        options.addArguments("--no-sandbox");
         if (config.isHeadless()) {
             options.addArguments("--headless=new");
         }

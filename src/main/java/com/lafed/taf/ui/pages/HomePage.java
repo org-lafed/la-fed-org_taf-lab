@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class HomePage extends BasePage {
-    private static final By HERO_SECTION = By.cssSelector("#slider.carousel, #slider");
+    private static final By HERO_SECTION = By.cssSelector("#slider");
 
     public HomePage(WebDriver driver, ExecutionConfig config) {
         super(driver, config);
@@ -21,7 +21,10 @@ public class HomePage extends BasePage {
 
     @Override
     public boolean isLoaded() {
-        return title().contains("Automation Exercise") || currentUrl().contains(config.getBaseUrl());
+        HeaderComponent header = header();
+        return header.isLogoVisible()
+                && header.isLoaded()
+                && isDisplayed(HERO_SECTION);
     }
 
     public boolean isHeroBannerVisible() {

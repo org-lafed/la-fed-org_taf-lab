@@ -2,6 +2,12 @@
 
 Minimal Java Maven Test Automation Framework for demonstration on [automationexercise.com](https://automationexercise.com). The project is intentionally layered, readable, and ready for future expansion.
 
+## Current Scope
+
+- Stable demonstrator coverage for the home page smoke path and products API path.
+- Registration and API-to-UI checkout remain explicit placeholders until live locator validation is completed.
+- Build output and local dependency caches are intentionally ignored and are not part of the versioned source.
+
 ## Purpose
 
 - Demonstrate a clean UI, API, and E2E automation framework structure.
@@ -24,7 +30,7 @@ Minimal Java Maven Test Automation Framework for demonstration on [automationexe
 
 - `config`: environment-driven execution configuration.
 - `core/driver`: browser lifecycle and driver creation.
-- `core/http`: shared API client factory and request filters.
+- `core/http`: shared API client factory and request handling.
 - `core/listeners`: Allure listener and reporting support.
 - `core/utils`: waits, screenshots, and resource helpers.
 - `core/state`: lightweight cross-step state storage.
@@ -71,4 +77,3 @@ Useful environment variable overrides:
 - Surefire reports: `target/surefire-reports`
 
 The framework intentionally emits standard `allure-results` so a newer Allure Report renderer can be plugged in later without changing test code.
-

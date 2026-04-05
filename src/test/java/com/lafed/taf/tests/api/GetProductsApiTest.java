@@ -10,12 +10,13 @@ public class GetProductsApiTest extends BaseApiTest {
     @Test(groups = {"api"}, description = "Verify that the public products endpoint returns a valid product catalog.")
     public void shouldReturnProductsCatalog() {
         Response response = productApiService.getAllProductsResponse();
-        ProductsResponse productsResponse = response.as(ProductsResponse.class);
-        Product firstProduct = productsResponse.getProducts().get(0);
+        ProductsResponse productsResponse = productApiService.parseProducts(response);
 
         ApiAssertions.assertStatusCode(response, 200);
         ApiAssertions.assertResponseCode(productsResponse, 200);
         ApiAssertions.assertProductsPresent(productsResponse);
+
+        Product firstProduct = productsResponse.getProducts().get(0);
         ApiAssertions.assertProductHasCoreFields(firstProduct);
         ApiAssertions.assertMatchesSchema(response, "schemas/products-list-schema.json");
     }

@@ -4,6 +4,8 @@ import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.ui.pages.BasePage;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 
 public class CookieConsentComponent extends BasePage {
@@ -23,10 +25,14 @@ public class CookieConsentComponent extends BasePage {
     }
 
     public void acceptIfPresent() {
-        KNOWN_ACCEPT_BUTTONS.stream()
-                .filter(this::isDisplayedSafely)
-                .findFirst()
-                .ifPresent(this::click);
+        try {
+            KNOWN_ACCEPT_BUTTONS.stream()
+                    .filter(this::isDisplayedSafely)
+                    .findFirst()
+                    .ifPresent(this::click);
+        } catch (StaleElementReferenceException | ElementClickInterceptedException ignored) {
+            // Tolerate ephemeral cookie banners that disappear before interaction.
+        }
     }
 
     private boolean isDisplayedSafely(By locator) {
