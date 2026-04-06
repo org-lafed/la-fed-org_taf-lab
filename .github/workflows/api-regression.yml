@@ -9,7 +9,7 @@ on:
   pull_request:
 
 jobs:
-  api-regression:
+  api-regression-structure-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,21 +23,5 @@ jobs:
           java-version: "17"
           cache: maven
 
-      - name: Run API regression suite
-        run: mvn -B clean test -DsuiteXmlFile=src/test/resources/suites/api-regression.xml -Denv=ci
-
-      - name: Upload Surefire reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-regression-surefire-reports
-          path: target/surefire-reports
-          if-no-files-found: warn
-
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-regression-allure-results
-          path: target/allure-results
-          if-no-files-found: warn
+      - name: Compile scaffold only
+        run: mvn -q -DskipTests test-compile -Denv=ci

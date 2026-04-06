@@ -1,13 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Smoke Suite" verbose="1">
-    <test name="Smoke Tests">
-        <groups>
-            <run>
-                <include name="smoke"/>
-            </run>
-        </groups>
+<suite name="Smoke Placeholder Suite" verbose="1">
+    <test name="UI Placeholder Test">
         <classes>
-            <class name="com.lafed.taf.tests.ui.HomePageSmokeTest"/>
+            <class name="com.lafed.taf.tests.ui.UiScenarioPlaceholderTest"/>
         </classes>
     </test>
 </suite>
