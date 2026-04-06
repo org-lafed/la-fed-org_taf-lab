@@ -35,11 +35,25 @@ public final class LoginPage extends BasePage {
                 && isDisplayed(LOGIN_BUTTON);
     }
 
-    public HomePage login(String email, String password) {
+    public LoginPage enterLoginEmail(String email) {
         type(LOGIN_EMAIL_INPUT, email);
+        return this;
+    }
+
+    public LoginPage enterLoginPassword(String password) {
         type(LOGIN_PASSWORD_INPUT, password);
+        return this;
+    }
+
+    public HomePage submitLogin() {
         scrollIntoView(LOGIN_BUTTON);
         click(LOGIN_BUTTON);
         return new HomePage(driver, config, waitUtils);
+    }
+
+    public HomePage login(String email, String password) {
+        return enterLoginEmail(email)
+                .enterLoginPassword(password)
+                .submitLogin();
     }
 }
