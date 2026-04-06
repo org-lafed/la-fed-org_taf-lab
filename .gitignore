@@ -33,6 +33,7 @@ allure-results/
 allure-report/
 test-output/
 surefire-reports/
+node_modules/
 
 coverage/
 reports/

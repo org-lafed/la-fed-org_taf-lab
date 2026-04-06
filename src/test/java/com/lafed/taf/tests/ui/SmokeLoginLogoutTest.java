@@ -1,16 +1,16 @@
 package com.lafed.taf.tests.ui;
 
-import com.lafed.taf.assertions.UiAssertions;
 import com.lafed.taf.config.ConfigManager;
 import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.core.driver.DriverFactory;
 import com.lafed.taf.core.driver.DriverManager;
 import com.lafed.taf.core.utils.ScreenshotService;
 import com.lafed.taf.core.utils.WaitUtils;
-import com.lafed.taf.ui.pages.HomePage;
-import com.lafed.taf.ui.pages.LoginPage;
+import com.lafed.taf.ui.flows.SmokeLoginLogoutFlow;
 import java.nio.file.Path;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +20,8 @@ import org.testng.annotations.Test;
  * Single real smoke suite for home scroll, login, and logout.
  */
 public final class SmokeLoginLogoutTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SmokeLoginLogoutTest.class);
 
     private ExecutionConfig config;
     private DriverManager driverManager;
@@ -33,42 +35,48 @@ public final class SmokeLoginLogoutTest {
         this.driverManager = new DriverManager(new DriverFactory());
         this.waitUtils = new WaitUtils();
         this.screenshotService = new ScreenshotService();
-
-        driverManager.start(config);
-        this.driver = driverManager.getDriver();
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown(ITestResult result) {
         try {
             if (driver != null && config.screenshotOnFailure() && !result.isSuccess()) {
-                String fileName = result.getName() + "-" + config.browserName() + ".png";
-                screenshotService.capture(driver, Path.of("target", "screenshots", fileName));
+                screenshotService.capture(driver,
+                        Path.of("target", "screenshots", result.getName() + "-" + config.browserName() + ".png"));
             }
         } finally {
-            driverManager.stop();
+            if (driver != null) {
+                runStep("Close browser", () -> {
+                    driverManager.stop();
+                    driver = null;
+                });
+            }
+
+            runStep("End test", () -> {
+            });
         }
     }
 
     @Test(groups = {"smoke", "ui"})
     public void shouldLoginAndLogoutFromTheHomePage() {
-        HomePage homePage = new HomePage(driver, config, waitUtils).open();
-        homePage.acceptConsentIfPresent();
-        homePage.scrollToBottomOfPage();
-        homePage.scrollBackToHero();
+        runStep("Start test", () -> {
+        });
+        runStep("Open browser", () -> {
+            driverManager.start(config);
+            driver = driverManager.getDriver();
+        });
 
-        LoginPage loginPage = homePage.openSignupLogin();
-        UiAssertions.assertTrue(loginPage.isReady(), "The login page should be ready before credentials are submitted.");
+        new SmokeLoginLogoutFlow(driver, config, waitUtils).execute();
+    }
 
-        HomePage authenticatedHomePage = loginPage
-                .login(config.smokeLoginEmail(), config.smokeLoginPassword())
-                .waitUntilAuthenticated(config.smokeLoginDisplayName());
-
-        UiAssertions.assertTrue(authenticatedHomePage.isLoggedInAs(config.smokeLoginDisplayName()),
-                "The authenticated header marker should be visible after login.");
-
-        LoginPage loggedOutLoginPage = authenticatedHomePage.logout();
-        UiAssertions.assertTrue(loggedOutLoginPage.isReady(),
-                "The login page should be visible again after logout.");
+    private void runStep(String action, Runnable runnable) {
+        LOG.info("[START] {}", action);
+        try {
+            runnable.run();
+            LOG.info("[DONE] {}", action);
+        } catch (RuntimeException exception) {
+            LOG.error("[FAIL] {}", action, exception);
+            throw exception;
+        }
     }
 }
