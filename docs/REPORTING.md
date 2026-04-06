@@ -1,15 +1,13 @@
 # Reporting
 
-Le reporting final n'est pas remis en place dans ce scaffold. Les anciennes intégrations spécifiques ont été retirées avec le reste de la logique concrète.
+The framework emits standard Allure result files into `target/allure-results`.
 
-## Intention cible
+- `allure.properties` sets the default results directory.
+- `categories.json` is copied into the results directory at runtime for defect grouping.
+- UI failures attach browser screenshots to the Allure test entry.
+- API requests and responses are attached through a RestAssured filter.
 
-- produire des résultats lisibles localement et en CI
-- brancher un format de rapport standard
-- centraliser captures, logs et métadonnées utiles
+Primary output locations:
 
-## État actuel
-
-- aucune chaîne de reporting complète n'est active
-- aucun document ne prétend qu'Allure ou un autre renderer est opérationnel
-- les futurs hooks de reporting devront être reconstruits proprement dans `core/listeners` et `core/utils`
+- `target/allure-results`
+- `target/surefire-reports`
