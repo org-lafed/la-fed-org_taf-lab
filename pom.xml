@@ -17,8 +17,11 @@
         <rest.assured.version>5.4.0</rest.assured.version>
         <slf4j.version>2.0.16</slf4j.version>
         <logback.version>1.5.16</logback.version>
+        <allure.version>2.24.0</allure.version>
+        <aspectj.version>1.9.22.1</aspectj.version>
         <suiteXmlFile>src/test/resources/suites/full-regression.xml</suiteXmlFile>
         <env>local</env>
+        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
     </properties>
 
     <dependencies>
@@ -52,6 +55,18 @@
             <version>${logback.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -74,6 +89,7 @@
                     </suiteXmlFiles>
                     <systemPropertyVariables>
                         <env>${env}</env>
+                        <allure.results.directory>${allure.results.directory}</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
