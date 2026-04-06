@@ -14,11 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import io.qameta.allure.testng.AllureTestNg;
+import com.lafed.taf.core.allure.AllureEnvironmentListener;
 
 /**
  * Single real smoke suite for home scroll, login, and logout.
  */
+@Listeners({AllureTestNg.class, AllureEnvironmentListener.class})
 public final class SmokeLoginLogoutTest {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmokeLoginLogoutTest.class);
