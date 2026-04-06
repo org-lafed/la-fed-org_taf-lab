@@ -1,8 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Smoke Placeholder Suite" verbose="1">
-    <test name="UI Placeholder Test">
+<suite name="UI Smoke Suite" verbose="1">
+    <test name="Login Logout Smoke">
         <classes>
-            <class name="com.lafed.taf.tests.ui.UiScenarioPlaceholderTest"/>
+            <class name="com.lafed.taf.tests.ui.SmokeLoginLogoutTest"/>
         </classes>
     </test>
 </suite>

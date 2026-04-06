@@ -15,4 +15,8 @@ public final class UiAssertions {
         Assert.assertTrue(actualTitle.contains(expectedFragment),
                 "Page title does not contain expected fragment: " + expectedFragment);
     }
+
+    public static void assertTrue(boolean condition, String message) {
+        Assert.assertTrue(condition, message);
+    }
 }

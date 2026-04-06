@@ -11,10 +11,14 @@ public record ExecutionConfig(
         String uiBaseUrl,
         String apiBaseUrl,
         String browserName,
+        String browserBinaryPath,
         boolean headless,
         Duration explicitTimeout,
         Duration pageLoadTimeout,
-        boolean screenshotOnFailure) {
+        boolean screenshotOnFailure,
+        String smokeLoginEmail,
+        String smokeLoginPassword,
+        String smokeLoginDisplayName) {
 
     public static ExecutionConfig from(Properties properties) {
         return new ExecutionConfig(
@@ -22,9 +26,13 @@ public record ExecutionConfig(
                 properties.getProperty("ui.base.url", "https://example.invalid"),
                 properties.getProperty("api.base.url", "https://example.invalid"),
                 properties.getProperty("browser.name", "chrome"),
+                properties.getProperty("browser.binary.path", ""),
                 Boolean.parseBoolean(properties.getProperty("browser.headless", "true")),
                 Duration.ofSeconds(Long.parseLong(properties.getProperty("timeout.explicit.seconds", "5"))),
                 Duration.ofSeconds(Long.parseLong(properties.getProperty("timeout.page.load.seconds", "15"))),
-                Boolean.parseBoolean(properties.getProperty("screenshot.on.failure", "true")));
+                Boolean.parseBoolean(properties.getProperty("screenshot.on.failure", "true")),
+                properties.getProperty("smoke.login.email", ""),
+                properties.getProperty("smoke.login.password", ""),
+                properties.getProperty("smoke.login.display.name", ""));
     }
 }

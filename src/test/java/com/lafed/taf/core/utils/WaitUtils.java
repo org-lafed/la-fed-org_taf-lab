@@ -1,35 +1,43 @@
 package com.lafed.taf.core.utils;
 
 import java.time.Duration;
-import java.time.Instant;
-import java.util.Objects;
-import java.util.function.BooleanSupplier;
+import java.util.function.Function;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Generic wait helpers with no page-specific stabilization logic.
+ * Thin wrapper around explicit Selenium waits.
  */
 public final class WaitUtils {
 
-    public void sleep(Duration duration) {
-        try {
-            Thread.sleep(duration.toMillis());
-        } catch (InterruptedException exception) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException("Thread interrupted while waiting", exception);
-        }
+    public WebDriverWait newWait(WebDriver driver, Duration timeout) {
+        return new WebDriverWait(driver, timeout);
     }
 
-    public boolean poll(BooleanSupplier condition, Duration timeout, Duration interval) {
-        Objects.requireNonNull(condition, "condition");
-        Instant deadline = Instant.now().plus(timeout);
+    public WebElement untilVisible(WebDriver driver, By locator, Duration timeout) {
+        return newWait(driver, timeout).until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
 
-        while (Instant.now().isBefore(deadline)) {
-            if (condition.getAsBoolean()) {
-                return true;
-            }
-            sleep(interval);
-        }
+    public WebElement untilClickable(WebDriver driver, By locator, Duration timeout) {
+        return newWait(driver, timeout).until(ExpectedConditions.elementToBeClickable(locator));
+    }
 
-        return condition.getAsBoolean();
+    public void untilTitleContains(WebDriver driver, String value, Duration timeout) {
+        newWait(driver, timeout).until(ExpectedConditions.titleContains(value));
+    }
+
+    public void untilUrlContains(WebDriver driver, String value, Duration timeout) {
+        newWait(driver, timeout).until(ExpectedConditions.urlContains(value));
+    }
+
+    public void untilInvisible(WebDriver driver, By locator, Duration timeout) {
+        newWait(driver, timeout).until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
+    public <T> T until(WebDriver driver, Duration timeout, Function<WebDriver, T> condition) {
+        return newWait(driver, timeout).until(condition);
     }
 }
