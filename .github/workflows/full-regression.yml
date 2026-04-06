@@ -6,7 +6,7 @@ on:
     - cron: "0 4 * * 1-5"
 
 jobs:
-  full-regression:
+  full-regression-structure-check:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,21 +20,5 @@ jobs:
           java-version: "17"
           cache: maven
 
-      - name: Run full regression suite
-        run: mvn -B clean test -DsuiteXmlFile=src/test/resources/suites/full-regression.xml -Denv=ci
-
-      - name: Upload Surefire reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-regression-surefire-reports
-          path: target/surefire-reports
-          if-no-files-found: warn
-
-      - name: Upload Allure results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-regression-allure-results
-          path: target/allure-results
-          if-no-files-found: warn
+      - name: Compile scaffold only
+        run: mvn -q -DskipTests test-compile -Denv=ci

@@ -1,27 +1,27 @@
 package com.lafed.taf.tests.api;
 
-import com.lafed.taf.api.clients.AutomationExerciseApiClient;
-import com.lafed.taf.api.services.ProductApiService;
-import com.lafed.taf.api.services.UserApiService;
+import com.lafed.taf.api.clients.BaseApiClient;
 import com.lafed.taf.config.ConfigManager;
 import com.lafed.taf.config.ExecutionConfig;
-import com.lafed.taf.core.http.ApiClientFactory;
-import io.restassured.specification.RequestSpecification;
-import org.testng.annotations.BeforeClass;
+import com.lafed.taf.core.http.RequestSpecFactory;
+import com.lafed.taf.core.state.StateStore;
 
+/**
+ * Shared API test scaffold.
+ */
 public abstract class BaseApiTest {
-    protected ExecutionConfig config;
-    protected RequestSpecification requestSpecification;
-    protected AutomationExerciseApiClient apiClient;
-    protected ProductApiService productApiService;
-    protected UserApiService userApiService;
 
-    @BeforeClass(alwaysRun = true)
-    public void setUpApiTest() {
-        config = ConfigManager.getConfig();
-        requestSpecification = ApiClientFactory.create(config);
-        apiClient = new AutomationExerciseApiClient(requestSpecification);
-        productApiService = new ProductApiService(apiClient);
-        userApiService = new UserApiService(apiClient);
+    protected ExecutionConfig config;
+    protected RequestSpecFactory requestSpecFactory;
+    protected StateStore stateStore;
+
+    protected void initializeApiContext() {
+        this.config = ConfigManager.load();
+        this.requestSpecFactory = new RequestSpecFactory();
+        this.stateStore = new StateStore();
+    }
+
+    protected BaseApiClient newApiClient() {
+        return new BaseApiClient(requestSpecFactory.create(config));
     }
 }

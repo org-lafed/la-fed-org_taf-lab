@@ -1,104 +1,58 @@
-# Test Automation Framework implemented above the TAE website for demonstration purposes.
+# la-fed-org_taf-lab
 
-Minimal Java Maven Test Automation Framework for demonstration on [automationexercise.com](https://automationexercise.com). The project is intentionally layered, readable, and ready for future expansion.
+Ce dépôt a été volontairement ramené à une ossature architecturale neutre et compilable. Il ne contient plus de logique métier, de scénarios concrets, de sélecteurs site-spécifiques, de flux UI/API/E2E implémentés, ni de correctifs opportunistes.
 
-## Current Scope
+## Intention
 
-- Stable demonstrator coverage for the home page smoke flow and the products API path.
-- Implemented UI regression scenarios for signup happy path, valid login, product search, product details, remove from cart, footer subscription, and contact us with upload.
-- Checkout-oriented E2E remains an explicit placeholder until live checkout locator validation is completed.
-- Build output and local dependency caches are intentionally ignored and are not part of the versioned source.
+Le projet sert désormais de point de départ propre pour une reconstruction pilotée. Le but est de fournir une séparation des responsabilités claire, quelques classes socles minimales et une structure de travail stable pour réintroduire ensuite les capacités UI, API, E2E, reporting et CI de manière contrôlée.
 
-## Purpose
+## Ce qui est présent
 
-- Demonstrate a clean UI, API, and E2E automation framework structure.
-- Keep the first version compilable and easy to extend.
-- Produce standard Allure result files under `target/allure-results`.
+- un `pom.xml` minimal pour compiler la structure de test
+- une arborescence `src/test/java/com/lafed/taf/...` organisée par couches
+- des classes de base génériques pour configuration, driver, HTTP, assertions, état et tests
+- des fichiers de configuration environnementale avec valeurs placeholders
+- des suites TestNG placeholders explicites
+- des workflows GitHub réduits à un contrôle de compilation structurelle
+- une documentation réécrite pour refléter honnêtement l'état de scaffold
 
-## Stack
+## Ce qui n'est pas implémenté
 
-- Java 17
-- Maven
-- TestNG
-- Selenium 4
-- RestAssured
-- Jackson
-- SLF4J + Logback
-- Allure TestNG
-- WebDriverManager
+- aucun scénario UI
+- aucun scénario API
+- aucun scénario E2E
+- aucune intégration métier de site cible
+- aucune stratégie de contournement publicitaire
+- aucune promesse de reporting final opérationnel
+- aucun flux de navigation ou appel API concret
 
-## Architecture Overview
+## Structure cible
 
-- `config`: environment-driven execution configuration.
-- `core/driver`: browser lifecycle and driver creation.
-- `core/http`: shared API client factory and request handling.
-- `core/listeners`: Allure listener and reporting support.
-- `core/utils`: waits, screenshots, and resource helpers.
-- `core/state`: lightweight cross-step state storage.
-- `ui/pages`, `ui/components`, `ui/flows`: page object layer and business flows.
-- `api/clients`, `api/services`, `api/models`, `api/assertions`: API abstraction and validations.
-- `data/builders`, `data/generators`: test data helpers.
-- `tests/ui`, `tests/api`, `tests/e2e`: runnable TestNG tests only.
-
-See the concise project documentation in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and related files.
-
-## Modeling
-
-- UML package and execution views: [docs/UML/00-modeling-overview.md](docs/UML/00-modeling-overview.md)
-- UTP2-oriented test modeling: [docs/UTP2/00-utp2-overview.md](docs/UTP2/00-utp2-overview.md)
-
-## How To Run
-
-Smoke suite:
-
-```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/smoke.xml -Denv=local
+```text
+la-fed-org_taf-lab/
+├── pom.xml
+├── README.md
+├── .gitignore
+├── .github/workflows/
+├── docs/
+└── src/test/
+    ├── java/com/lafed/taf/
+    └── resources/
 ```
 
-Smoke suite on macOS with an explicit Chrome binary:
+Les packages `config`, `core`, `ui`, `api`, `data`, `assertions` et `tests` existent uniquement comme scaffold technique.
+
+## Philosophie de reconstruction
+
+1. poser d'abord les fondations transverses
+2. réintroduire ensuite les briques UI et API génériques
+3. ajouter les scénarios réels seulement après validation explicite
+4. brancher le reporting et la CI finale en dernier
+
+## Compilation de la structure
 
 ```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/smoke.xml -Denv=local -Dbrowser=chrome -Dbrowser.binary.path="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+mvn clean test-compile -Denv=local
 ```
 
-UI regression:
-
-```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/ui-regression.xml -Denv=local
-```
-
-API regression:
-
-```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/api-regression.xml -Denv=demo
-```
-
-Full regression:
-
-```bash
-mvn clean test -DsuiteXmlFile=src/test/resources/suites/full-regression.xml -Denv=ci
-```
-
-Useful environment variable overrides:
-
-- `TAF_ENV`
-- `TAF_BASE_URL`
-- `TAF_API_BASE_URL`
-- `TAF_BROWSER`
-- `TAF_BROWSER_BINARY`
-- `TAF_HEADLESS`
-- `TAF_EXPLICIT_TIMEOUT_SECONDS`
-- `TAF_SCREENSHOT_ON_FAILURE`
-
-## Browser Notes
-
-- Chrome accepts an optional binary override through `browser.binary.path` or `TAF_BROWSER_BINARY`.
-- On macOS, if no explicit Chrome path is provided, the framework also checks common application locations such as `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`.
-- Edge now relies on Selenium Manager through `new EdgeDriver(...)` rather than `WebDriverManager.edgedriver().setup()`, which avoids separate Edge driver resolution through WebDriverManager.
-
-## Reports
-
-- Allure raw results: `target/allure-results`
-- Surefire reports: `target/surefire-reports`
-
-The framework intentionally emits standard `allure-results` so a newer Allure Report renderer can be plugged in later without changing test code.
+La commande ci-dessus valide uniquement la cohérence de compilation du scaffold.

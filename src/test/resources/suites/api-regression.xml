@@ -1,13 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="API Regression Suite" verbose="1">
-    <test name="API Regression">
-        <groups>
-            <run>
-                <include name="api"/>
-            </run>
-        </groups>
+<suite name="API Regression Placeholder Suite" verbose="1">
+    <test name="API Placeholder Regression">
         <classes>
-            <class name="com.lafed.taf.tests.api.GetProductsApiTest"/>
+            <class name="com.lafed.taf.tests.api.ApiScenarioPlaceholderTest"/>
         </classes>
     </test>
 </suite>

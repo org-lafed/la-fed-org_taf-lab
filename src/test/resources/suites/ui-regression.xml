@@ -1,20 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="UI Regression Suite" verbose="1">
-    <test name="UI Regression">
-        <groups>
-            <run>
-                <include name="ui"/>
-            </run>
-        </groups>
+<suite name="UI Regression Placeholder Suite" verbose="1">
+    <test name="UI Placeholder Regression">
         <classes>
-            <class name="com.lafed.taf.tests.ui.HomePageSmokeTest"/>
-            <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
-            <class name="com.lafed.taf.tests.ui.ValidLoginTest"/>
-            <class name="com.lafed.taf.tests.ui.SearchProductTest"/>
-            <class name="com.lafed.taf.tests.ui.ProductDetailsTest"/>
-            <class name="com.lafed.taf.tests.ui.RemoveFromCartTest"/>
-            <class name="com.lafed.taf.tests.ui.SubscriptionTest"/>
-            <class name="com.lafed.taf.tests.ui.ContactUsUploadTest"/>
+            <class name="com.lafed.taf.tests.ui.UiScenarioPlaceholderTest"/>
         </classes>
     </test>
 </suite>

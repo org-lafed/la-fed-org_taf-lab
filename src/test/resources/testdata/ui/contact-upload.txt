@@ -1,2 +1,0 @@
-TAF Lab contact form upload fixture.
-This file is intentionally small and deterministic for UI upload validation.
