@@ -1,0 +1,13 @@
+  appmod/java-upgrade-20260406073000[m
+  develop[m
+  feature/ui-tc01-register-user[m
+  feature/ui-tc02-login-valid-user[m
+* [32mfeature/ui-tc03-login-invalid-user[m
+  main[m
+  [31mremotes/origin/HEAD[m -> origin/main
+  [31mremotes/origin/appmod/java-upgrade-20260406073000[m
+  [31mremotes/origin/develop[m
+  [31mremotes/origin/feature/ui-tc01-register-user[m
+  [31mremotes/origin/feature/ui-tc02-login-valid-user[m
+  [31mremotes/origin/feature/ui-tc03-login-invalid-user[m
+  [31mremotes/origin/main[m
