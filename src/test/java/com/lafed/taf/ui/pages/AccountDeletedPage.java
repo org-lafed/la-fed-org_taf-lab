@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Represents the "ACCOUNT DELETED!" confirmation.
+ * Represents the account deletion confirmation page.
  */
 public final class AccountDeletedPage extends BasePage {
 

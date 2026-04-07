@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Represents the "ACCOUNT CREATED!" confirmation.
+ * Represents the account creation confirmation page.
  */
 public final class AccountCreatedPage extends BasePage {
 
