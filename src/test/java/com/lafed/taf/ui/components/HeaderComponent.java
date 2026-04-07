@@ -14,6 +14,7 @@ public final class HeaderComponent extends BasePage {
     private static final By SIGNUP_LOGIN_LINK = By.cssSelector("header a[href='/login']");
     private static final By LOGOUT_LINK = By.cssSelector("header a[href='/logout']");
     private static final By LOGGED_IN_MARKER = By.xpath("//header//a[contains(normalize-space(.), 'Logged in as')]");
+    private static final By DELETE_ACCOUNT_LINK = By.xpath("//header//a[contains(normalize-space(.), 'Delete Account')]");
 
     public HeaderComponent(WebDriver driver, ExecutionConfig config, WaitUtils waitUtils) {
         super(driver, config, waitUtils);
@@ -43,5 +44,10 @@ public final class HeaderComponent extends BasePage {
     public void clickLogout() {
         scrollIntoView(LOGOUT_LINK);
         click(LOGOUT_LINK);
+    }
+
+    public void clickDeleteAccount() {
+        scrollIntoView(DELETE_ACCOUNT_LINK);
+        click(DELETE_ACCOUNT_LINK);
     }
 }
