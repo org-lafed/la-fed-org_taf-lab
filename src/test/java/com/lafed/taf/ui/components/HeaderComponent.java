@@ -23,6 +23,10 @@ public final class HeaderComponent extends BasePage {
         visible(SIGNUP_LOGIN_LINK);
     }
 
+    public boolean isAnonymousNavigationReady() {
+        return isDisplayed(SIGNUP_LOGIN_LINK);
+    }
+
     public void clickSignupLogin() {
         scrollIntoView(SIGNUP_LOGIN_LINK);
         click(SIGNUP_LOGIN_LINK);

@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -63,6 +64,24 @@ public abstract class BasePage {
         WebElement element = visible(locator);
         element.clear();
         element.sendKeys(value);
+        if (value.equals(element.getAttribute("value"))) {
+            return;
+        }
+
+        element.sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
+        element.sendKeys(value);
+        if (value.equals(element.getAttribute("value"))) {
+            return;
+        }
+
+        executeScript(
+                "arguments[0].value = arguments[1];"
+                        + "arguments[0].dispatchEvent(new Event('input', {bubbles: true}));"
+                        + "arguments[0].dispatchEvent(new Event('change', {bubbles: true}));",
+                element,
+                value);
+        waitUtils.until(driver, config.explicitTimeout(),
+                currentDriver -> value.equals(currentDriver.findElement(locator).getAttribute("value")));
     }
 
     protected void click(By locator) {
