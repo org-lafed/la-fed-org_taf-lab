@@ -6,14 +6,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 /**
- * Login page interactions needed by the smoke login/logout flow.
+ * Login and signup page interactions used by UI scenarios.
  */
 public final class LoginPage extends BasePage {
 
     private static final By LOGIN_HEADING = By.xpath("//h2[normalize-space()='Login to your account']");
+    private static final By NEW_USER_SIGNUP_HEADING = By.xpath("//h2[normalize-space()='New User Signup!']");
     private static final By LOGIN_EMAIL_INPUT = By.cssSelector("input[data-qa='login-email']");
     private static final By LOGIN_PASSWORD_INPUT = By.cssSelector("input[data-qa='login-password']");
     private static final By LOGIN_BUTTON = By.cssSelector("button[data-qa='login-button']");
+    private static final By SIGNUP_NAME_INPUT = By.cssSelector("input[data-qa='signup-name']");
+    private static final By SIGNUP_EMAIL_INPUT = By.cssSelector("input[data-qa='signup-email']");
+    private static final By SIGNUP_BUTTON = By.cssSelector("button[data-qa='signup-button']");
 
     public LoginPage(WebDriver driver, ExecutionConfig config, WaitUtils waitUtils) {
         super(driver, config, waitUtils);
@@ -55,5 +59,29 @@ public final class LoginPage extends BasePage {
         return enterLoginEmail(email)
                 .enterLoginPassword(password)
                 .submitLogin();
+    }
+
+    public LoginPage assertNewUserSignupVisible() {
+        visible(NEW_USER_SIGNUP_HEADING);
+        visible(SIGNUP_NAME_INPUT);
+        visible(SIGNUP_EMAIL_INPUT);
+        visible(SIGNUP_BUTTON);
+        return this;
+    }
+
+    public LoginPage enterSignupName(String name) {
+        type(SIGNUP_NAME_INPUT, name);
+        return this;
+    }
+
+    public LoginPage enterSignupEmail(String email) {
+        type(SIGNUP_EMAIL_INPUT, email);
+        return this;
+    }
+
+    public AccountInformationPage submitNewUser() {
+        scrollIntoView(SIGNUP_BUTTON);
+        click(SIGNUP_BUTTON);
+        return new AccountInformationPage(driver, config, waitUtils);
     }
 }

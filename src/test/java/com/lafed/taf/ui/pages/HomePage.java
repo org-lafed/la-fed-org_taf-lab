@@ -64,6 +64,11 @@ public final class HomePage extends BasePage {
         return new LoginPage(driver, config, waitUtils).waitUntilReady();
     }
 
+    public AccountDeletedPage deleteAccount() {
+        header().clickDeleteAccount();
+        return new AccountDeletedPage(driver, config, waitUtils);
+    }
+
     private HeaderComponent header() {
         return new HeaderComponent(driver, config, waitUtils);
     }

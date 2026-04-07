@@ -2,7 +2,8 @@
 <suite name="UI Regression Placeholder Suite" verbose="1">
     <test name="UI Placeholder Regression">
         <classes>
-            <class name="com.lafed.taf.tests.ui.UiScenarioPlaceholderTest"/>
+            <class name="com.lafed.taf.tests.ui.SmokeLoginLogoutTest"/>
+            <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
         </classes>
     </test>
 </suite>
