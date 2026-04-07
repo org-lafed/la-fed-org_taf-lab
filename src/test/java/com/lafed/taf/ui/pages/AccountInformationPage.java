@@ -2,6 +2,7 @@ package com.lafed.taf.ui.pages;
 
 import com.lafed.taf.config.ExecutionConfig;
 import com.lafed.taf.core.utils.WaitUtils;
+import com.lafed.taf.data.generators.UserAccountData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -111,6 +112,27 @@ public final class AccountInformationPage extends BasePage {
         type(ZIPCODE_INPUT, zipcode);
         type(MOBILE_NUMBER_INPUT, mobileNumber);
         return this;
+    }
+
+    public AccountInformationPage fillRequiredDetails(UserAccountData user) {
+        return selectTitle(Title.MR)
+                .enterName(user.displayName())
+                .enterEmail(user.email())
+                .enterPassword(user.password())
+                .selectBirthDate(user.birthDay(), user.birthMonth(), user.birthYear())
+                .signUpForNewsletter()
+                .receivePartnerOffers()
+                .fillAddressDetails(
+                        user.firstName(),
+                        user.lastName(),
+                        user.company(),
+                        user.addressLine1(),
+                        user.addressLine2(),
+                        user.country(),
+                        user.state(),
+                        user.city(),
+                        user.zipcode(),
+                        user.mobileNumber());
     }
 
     public AccountCreatedPage submitCreateAccount() {

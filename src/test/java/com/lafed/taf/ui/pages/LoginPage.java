@@ -25,11 +25,7 @@ public final class LoginPage extends BasePage {
 
     public LoginPage waitUntilReady() {
         waitUtils.untilUrlContains(driver, "/login", config.explicitTimeout());
-        visible(LOGIN_HEADING);
-        visible(LOGIN_EMAIL_INPUT);
-        visible(LOGIN_PASSWORD_INPUT);
-        visible(LOGIN_BUTTON);
-        return this;
+        return assertLoginToYourAccountVisible();
     }
 
     public boolean isReady() {
@@ -59,6 +55,14 @@ public final class LoginPage extends BasePage {
         return enterLoginEmail(email)
                 .enterLoginPassword(password)
                 .submitLogin();
+    }
+
+    public LoginPage assertLoginToYourAccountVisible() {
+        visible(LOGIN_HEADING);
+        visible(LOGIN_EMAIL_INPUT);
+        visible(LOGIN_PASSWORD_INPUT);
+        visible(LOGIN_BUTTON);
+        return this;
     }
 
     public LoginPage assertNewUserSignupVisible() {

@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Keeps the AUT window in focus and attempts polite recovery from blocking UI interferences.
+ * Keeps the AUT window in focus and recovers from blocking UI interferences.
  */
 public final class UiInterferenceGuard {
 
@@ -39,7 +39,7 @@ public final class UiInterferenceGuard {
                             + " or normalize-space()='Not now'"
                             + " or normalize-space()='X'"
                             + " or normalize-space()='x'"
-                            + " or normalize-space()='×']"),
+                            + " or normalize-space()='\u00D7']"),
             By.xpath(
                     "//*[self::button or self::a or @role='button']"
                             + "[normalize-space()='Close'"
@@ -52,13 +52,12 @@ public final class UiInterferenceGuard {
                             + " or normalize-space()='Not now'"
                             + " or normalize-space()='X'"
                             + " or normalize-space()='x'"
-                            + " or normalize-space()='×']"),
+                            + " or normalize-space()='\u00D7']"),
             By.cssSelector(
                     "[aria-label='Close'], [aria-label='Dismiss'], [title='Close'], [title='Dismiss'],"
                             + " [data-dismiss], .close, .btn-close"));
 
     private final WebDriver driver;
-    private final ExecutionConfig config;
     private final WaitUtils waitUtils;
     private final String autHost;
 
@@ -67,18 +66,9 @@ public final class UiInterferenceGuard {
 
     public UiInterferenceGuard(WebDriver driver, ExecutionConfig config, WaitUtils waitUtils) {
         this.driver = Objects.requireNonNull(driver, "driver");
-        this.config = Objects.requireNonNull(config, "config");
         this.waitUtils = Objects.requireNonNull(waitUtils, "waitUtils");
+        Objects.requireNonNull(config, "config");
         this.autHost = URI.create(config.uiBaseUrl()).getHost();
-    }
-
-    public void captureAutWindow() {
-        if (autWindowHandle == null) {
-            autWindowHandle = driver.getWindowHandle();
-        }
-        if (isAutUrl(driver.getCurrentUrl())) {
-            lastKnownAutUrl = driver.getCurrentUrl();
-        }
     }
 
     public void prepareProtectedStep() {
@@ -98,10 +88,9 @@ public final class UiInterferenceGuard {
     }
 
     public boolean isProbableInterference(RuntimeException exception) {
-        if (exception instanceof ElementClickInterceptedException || exception instanceof NoSuchWindowException) {
-            return true;
-        }
-        if (exception instanceof TimeoutException) {
+        if (exception instanceof ElementClickInterceptedException
+                || exception instanceof NoSuchWindowException
+                || exception instanceof TimeoutException) {
             return true;
         }
 
@@ -121,10 +110,16 @@ public final class UiInterferenceGuard {
         LOG.info("[INFO] Retrying protected action after interference recovery");
     }
 
-    private void restoreAutWindowContext() {
-        captureAutWindow();
-        LOG.info("[INFO] Restoring AUT window context");
+    private void captureAutWindow() {
+        if (autWindowHandle == null) {
+            autWindowHandle = driver.getWindowHandle();
+        }
+        if (isAutUrl(driver.getCurrentUrl())) {
+            lastKnownAutUrl = driver.getCurrentUrl();
+        }
+    }
 
+    private void restoreAutWindowContext() {
         Set<String> handles = new LinkedHashSet<>(driver.getWindowHandles());
         for (String handle : handles) {
             if (handle.equals(autWindowHandle)) {
@@ -149,6 +144,10 @@ public final class UiInterferenceGuard {
         }
 
         driver.switchTo().defaultContent();
+
+        if (lastKnownAutUrl != null && !lastKnownAutUrl.isBlank() && !isAutUrl(driver.getCurrentUrl())) {
+            driver.navigate().to(lastKnownAutUrl);
+        }
 
         if (isAutUrl(driver.getCurrentUrl())) {
             lastKnownAutUrl = driver.getCurrentUrl();

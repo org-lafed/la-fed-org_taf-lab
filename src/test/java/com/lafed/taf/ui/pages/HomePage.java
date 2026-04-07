@@ -55,6 +55,10 @@ public final class HomePage extends BasePage {
         return this;
     }
 
+    public HomePage assertVisible() {
+        return waitUntilReady();
+    }
+
     public boolean isLoggedInAs(String expectedDisplayName) {
         return header().isLoggedInAs(expectedDisplayName);
     }
