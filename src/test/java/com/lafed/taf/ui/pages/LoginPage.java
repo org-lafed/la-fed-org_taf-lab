@@ -10,10 +10,14 @@ import org.openqa.selenium.WebDriver;
  */
 public final class LoginPage extends BasePage {
 
+    public static final String INVALID_CREDENTIALS_ERROR_TEXT = "Your email or password is incorrect!";
+
     private static final By LOGIN_HEADING = By.xpath("//h2[normalize-space()='Login to your account']");
     private static final By LOGIN_EMAIL_INPUT = By.cssSelector("input[data-qa='login-email']");
     private static final By LOGIN_PASSWORD_INPUT = By.cssSelector("input[data-qa='login-password']");
     private static final By LOGIN_BUTTON = By.cssSelector("button[data-qa='login-button']");
+    private static final By LOGIN_ERROR_MESSAGE = By.xpath("//form[@action='/login']//p[normalize-space()='"
+            + INVALID_CREDENTIALS_ERROR_TEXT + "']");
 
     public LoginPage(WebDriver driver, ExecutionConfig config, WaitUtils waitUtils) {
         super(driver, config, waitUtils);
@@ -49,6 +53,25 @@ public final class LoginPage extends BasePage {
         scrollIntoView(LOGIN_BUTTON);
         click(LOGIN_BUTTON);
         return new HomePage(driver, config, waitUtils);
+    }
+
+    public LoginPage submitLoginExpectingFailure() {
+        scrollIntoView(LOGIN_BUTTON);
+        click(LOGIN_BUTTON);
+        return waitUntilInvalidCredentialsErrorVisible();
+    }
+
+    public LoginPage waitUntilInvalidCredentialsErrorVisible() {
+        visible(LOGIN_ERROR_MESSAGE);
+        return this;
+    }
+
+    public boolean isInvalidCredentialsErrorVisible() {
+        return isDisplayed(LOGIN_ERROR_MESSAGE);
+    }
+
+    public String invalidCredentialsErrorText() {
+        return text(LOGIN_ERROR_MESSAGE);
     }
 
     public HomePage login(String email, String password) {

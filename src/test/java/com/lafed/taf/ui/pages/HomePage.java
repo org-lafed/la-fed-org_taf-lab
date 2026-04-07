@@ -30,6 +30,12 @@ public final class HomePage extends BasePage {
         return this;
     }
 
+    public boolean isReady() {
+        return currentTitle().contains("Automation Exercise")
+                && isDisplayed(HERO_SECTION)
+                && header().isAnonymousNavigationReady();
+    }
+
     public HomePage scrollToBottomOfPage() {
         scrollIntoView(SUBSCRIPTION_HEADING);
         visible(SUBSCRIPTION_HEADING);
