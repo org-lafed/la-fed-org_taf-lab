@@ -2,6 +2,19 @@
 
 Minimal Java Maven Test Automation Framework for demonstration on [automationexercise.com](https://automationexercise.com). The project is intentionally layered, readable, and ready for future expansion.
 
+## Visual Snapshot
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Allure_Report-100%25%20passed-2ea44f?style=for-the-badge&logo=allure" alt="Allure Report 100% passed" />
+  <img src="https://img.shields.io/badge/Tests-4%20passed-2ea44f?style=for-the-badge" alt="4 passed tests" />
+  <img src="https://img.shields.io/badge/Browser-Chrome-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Chrome browser" />
+  <img src="https://img.shields.io/badge/OS-Windows%2011-0078D4?style=for-the-badge&logo=windows11&logoColor=white" alt="Windows 11" />
+  <img src="https://img.shields.io/badge/Java-18.0.2.1-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 18.0.2.1" />
+  <img src="https://img.shields.io/badge/Env-local-3b82f6?style=for-the-badge" alt="local environment" />
+</p>
+
+The current local report snapshot shows a clean Allure run with 4 tests passed, 0 quality gates, 0 global errors, Chrome execution on Windows 11, and a visible end-to-end duration timeline.
+
 ## Current Scope
 
 - Stable demonstrator coverage for the home page smoke flow and the products API path.

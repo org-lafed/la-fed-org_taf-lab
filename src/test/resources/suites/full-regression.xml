@@ -2,9 +2,12 @@
 <suite name="Full Regression Placeholder Suite" verbose="1">
     <test name="Scaffold Placeholders">
         <classes>
-            <class name="com.lafed.taf.tests.ui.UiScenarioPlaceholderTest"/>
-            <class name="com.lafed.taf.tests.api.ApiScenarioPlaceholderTest"/>
-            <class name="com.lafed.taf.tests.e2e.E2eScenarioPlaceholderTest"/>
+            <class name="com.lafed.taf.tests.ui.SmokeLoginLogoutTest"/>
+            <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
+            <class name="com.lafed.taf.tests.ui.Tc02LoginValidUserTest"/>
+            <class name="com.lafed.taf.tests.ui.Tc03LoginInvalidUserTest"/>
+
+            <class name="com.lafed.taf.tests.api.Api01GetAllProductsListTest"/>
         </classes>
     </test>
 </suite>
