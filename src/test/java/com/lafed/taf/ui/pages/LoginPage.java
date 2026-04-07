@@ -10,11 +10,15 @@ import org.openqa.selenium.WebDriver;
  */
 public final class LoginPage extends BasePage {
 
+    private static final String INVALID_CREDENTIALS_ERROR_TEXT = "Your email or password is incorrect!";
+
     private static final By LOGIN_HEADING = By.xpath("//h2[normalize-space()='Login to your account']");
     private static final By NEW_USER_SIGNUP_HEADING = By.xpath("//h2[normalize-space()='New User Signup!']");
     private static final By LOGIN_EMAIL_INPUT = By.cssSelector("input[data-qa='login-email']");
     private static final By LOGIN_PASSWORD_INPUT = By.cssSelector("input[data-qa='login-password']");
     private static final By LOGIN_BUTTON = By.cssSelector("button[data-qa='login-button']");
+    private static final By LOGIN_ERROR_MESSAGE = By.xpath("//form[@action='/login']//p[normalize-space()='"
+            + INVALID_CREDENTIALS_ERROR_TEXT + "']");
     private static final By SIGNUP_NAME_INPUT = By.cssSelector("input[data-qa='signup-name']");
     private static final By SIGNUP_EMAIL_INPUT = By.cssSelector("input[data-qa='signup-email']");
     private static final By SIGNUP_BUTTON = By.cssSelector("button[data-qa='signup-button']");
@@ -62,6 +66,11 @@ public final class LoginPage extends BasePage {
         visible(LOGIN_EMAIL_INPUT);
         visible(LOGIN_PASSWORD_INPUT);
         visible(LOGIN_BUTTON);
+        return this;
+    }
+
+    public LoginPage assertInvalidCredentialsErrorVisible() {
+        visible(LOGIN_ERROR_MESSAGE);
         return this;
     }
 
