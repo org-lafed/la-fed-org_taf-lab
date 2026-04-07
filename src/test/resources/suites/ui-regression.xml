@@ -4,6 +4,8 @@
         <classes>
             <class name="com.lafed.taf.tests.ui.SmokeLoginLogoutTest"/>
             <class name="com.lafed.taf.tests.ui.RegisterUserTest"/>
+            <class name="com.lafed.taf.tests.ui.Tc02LoginValidUserTest"/>
+            <class name="com.lafed.taf.tests.ui.Tc03LoginInvalidUserTest"/>
         </classes>
     </test>
 </suite>

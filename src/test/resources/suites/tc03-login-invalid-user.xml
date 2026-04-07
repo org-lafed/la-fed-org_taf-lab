@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UI TC03 Login Invalid User Suite" verbose="1">
+    <test name="Login Invalid User">
+        <classes>
+            <class name="com.lafed.taf.tests.ui.Tc03LoginInvalidUserTest"/>
+        </classes>
+    </test>
+</suite>
