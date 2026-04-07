@@ -15,6 +15,7 @@ import org.openqa.selenium.NoSuchWindowException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,13 +115,19 @@ public final class UiInterferenceGuard {
         if (autWindowHandle == null) {
             autWindowHandle = driver.getWindowHandle();
         }
-        if (isAutUrl(driver.getCurrentUrl())) {
-            lastKnownAutUrl = driver.getCurrentUrl();
+        String currentUrl = currentUrlSafely();
+        if (isAutUrl(currentUrl)) {
+            lastKnownAutUrl = currentUrl;
         }
     }
 
     private void restoreAutWindowContext() {
-        Set<String> handles = new LinkedHashSet<>(driver.getWindowHandles());
+        Set<String> handles = snapshotWindowHandles();
+        if (handles.isEmpty()) {
+            LOG.warn("[WARN] No browser window handle available while restoring AUT context");
+            return;
+        }
+
         for (String handle : handles) {
             if (handle.equals(autWindowHandle)) {
                 continue;
@@ -128,29 +135,99 @@ public final class UiInterferenceGuard {
 
             try {
                 driver.switchTo().window(handle);
-                LOG.info("[INFO] Closing unexpected popup window");
+                LOG.info("[INFO] Attempting to close unexpected popup window handle={}", handle);
                 driver.close();
+                LOG.info("[INFO] Closed unexpected popup window handle={}", handle);
             } catch (NoSuchWindowException ignored) {
-                // Window disappeared between detection and close. No action needed.
+                LOG.info("[INFO] Unexpected popup window already disappeared handle={}", handle);
+            } catch (WebDriverException exception) {
+                LOG.warn(
+                        "[WARN] Failed to close unexpected popup window handle={}; abandoning close and returning to AUT",
+                        handle,
+                        exception);
+                switchToAutWindow(snapshotWindowHandles());
+                break;
             }
+
+            switchToAutWindow(snapshotWindowHandles());
         }
 
-        Set<String> remainingHandles = driver.getWindowHandles();
-        if (remainingHandles.contains(autWindowHandle)) {
-            driver.switchTo().window(autWindowHandle);
-        } else if (!remainingHandles.isEmpty()) {
-            autWindowHandle = remainingHandles.iterator().next();
-            driver.switchTo().window(autWindowHandle);
+        Set<String> remainingHandles = snapshotWindowHandles();
+        if (!switchToAutWindow(remainingHandles)) {
+            return;
         }
 
         driver.switchTo().defaultContent();
 
-        if (lastKnownAutUrl != null && !lastKnownAutUrl.isBlank() && !isAutUrl(driver.getCurrentUrl())) {
+        String currentUrl = currentUrlSafely();
+        if (lastKnownAutUrl != null && !lastKnownAutUrl.isBlank() && !isAutUrl(currentUrl)) {
             driver.navigate().to(lastKnownAutUrl);
+            currentUrl = currentUrlSafely();
         }
 
-        if (isAutUrl(driver.getCurrentUrl())) {
-            lastKnownAutUrl = driver.getCurrentUrl();
+        if (isAutUrl(currentUrl)) {
+            lastKnownAutUrl = currentUrl;
+        }
+    }
+
+    private Set<String> snapshotWindowHandles() {
+        try {
+            return new LinkedHashSet<>(driver.getWindowHandles());
+        } catch (WebDriverException exception) {
+            LOG.warn("[WARN] Unable to inspect browser windows while restoring AUT context", exception);
+            return Set.of();
+        }
+    }
+
+    private boolean switchToAutWindow(Set<String> handles) {
+        if (autWindowHandle != null && handles.contains(autWindowHandle)) {
+            try {
+                driver.switchTo().window(autWindowHandle);
+                LOG.info("[INFO] Returned to AUT window handle={}", autWindowHandle);
+                return true;
+            } catch (WebDriverException exception) {
+                LOG.warn("[WARN] Unable to switch back to AUT window handle={}", autWindowHandle, exception);
+            }
+        }
+
+        for (String handle : handles) {
+            try {
+                driver.switchTo().window(handle);
+                String currentUrl = currentUrlSafely();
+                if (!isAutUrl(currentUrl)) {
+                    continue;
+                }
+
+                autWindowHandle = handle;
+                lastKnownAutUrl = currentUrl;
+                LOG.info("[INFO] Returned to AUT window handle={}", autWindowHandle);
+                return true;
+            } catch (WebDriverException exception) {
+                LOG.warn("[WARN] Unable to inspect remaining window handle={} while restoring AUT context", handle, exception);
+            }
+        }
+
+        if (!handles.isEmpty()) {
+            autWindowHandle = handles.iterator().next();
+            try {
+                driver.switchTo().window(autWindowHandle);
+                LOG.warn("[WARN] AUT handle unavailable; switched to remaining window handle={}", autWindowHandle);
+                return true;
+            } catch (WebDriverException exception) {
+                LOG.warn("[WARN] Unable to switch to remaining window handle={}", autWindowHandle, exception);
+            }
+        }
+
+        LOG.warn("[WARN] Unable to switch back to AUT window because no handle remains");
+        return false;
+    }
+
+    private String currentUrlSafely() {
+        try {
+            return driver.getCurrentUrl();
+        } catch (WebDriverException exception) {
+            LOG.warn("[WARN] Unable to read current browser URL while restoring AUT context", exception);
+            return null;
         }
     }
 
