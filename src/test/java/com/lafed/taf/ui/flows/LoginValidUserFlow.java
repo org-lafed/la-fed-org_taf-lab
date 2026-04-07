@@ -1,56 +1,68 @@
 package com.lafed.taf.ui.flows;
 
 import com.lafed.taf.config.ExecutionConfig;
+import com.lafed.taf.core.utils.WaitUtils;
+import com.lafed.taf.data.generators.UserAccountData;
+import com.lafed.taf.ui.guards.UiInterferenceGuard;
+import com.lafed.taf.ui.pages.AccountDeletedPage;
 import com.lafed.taf.ui.pages.HomePage;
 import com.lafed.taf.ui.pages.LoginPage;
-import com.lafed.taf.ui.guards.UiInterferenceGuard;
 import java.util.function.Supplier;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Dedicated smoke flow with step-oriented execution logging.
+ * Encapsulates Test Case 2: login with a valid user and delete the account.
  */
-public final class SmokeLoginLogoutFlow {
+public final class LoginValidUserFlow {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SmokeLoginLogoutFlow.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LoginValidUserFlow.class);
 
     private final WebDriver driver;
     private final ExecutionConfig config;
-    private final com.lafed.taf.core.utils.WaitUtils waitUtils;
+    private final WaitUtils waitUtils;
     private final UiInterferenceGuard interferenceGuard;
+    private final UserAccountData user;
 
-    public SmokeLoginLogoutFlow(WebDriver driver, ExecutionConfig config, com.lafed.taf.core.utils.WaitUtils waitUtils) {
+    public LoginValidUserFlow(WebDriver driver, ExecutionConfig config, WaitUtils waitUtils, UserAccountData user) {
         this.driver = driver;
         this.config = config;
         this.waitUtils = waitUtils;
         this.interferenceGuard = new UiInterferenceGuard(driver, config, waitUtils);
+        this.user = user;
     }
 
     public void execute() {
-        LOG.info("[INFO] Browser={} | BaseUrl={}", config.browserName(), config.uiBaseUrl());
+        LOG.info("[INFO] Executing TC02 valid login for email={}", user.email());
 
-        HomePage homePage = protectedStep("Navigate to target site", () -> {
+        HomePage homePage = protectedStep("Navigate to url 'http://automationexercise.com'", () -> {
             HomePage page = new HomePage(driver, config, waitUtils).open();
             page.acceptConsentIfPresent();
             return page;
         });
-        step("Scroll down to bottom of page", homePage::scrollToBottomOfPage);
-        step("Scroll up to hero/menu section", homePage::scrollBackToHero);
+        step("Verify that home page is visible successfully", homePage::assertVisible);
 
-        LoginPage loginPage = protectedStep("Click signup/login", homePage::openSignupLogin);
-        step("Enter login email", () -> loginPage.enterLoginEmail(config.smokeLoginEmail()));
-        step("Enter login password", () -> loginPage.enterLoginPassword(config.smokeLoginPassword()));
+        LoginPage loginPage = protectedStep("Click on 'Signup / Login' button", homePage::openSignupLogin);
+        step("Verify 'Login to your account' is visible", loginPage::assertLoginToYourAccountVisible);
+        step("Enter correct email address and password", () -> loginPage
+                .enterLoginEmail(user.email())
+                .enterLoginPassword(user.password()));
 
-        HomePage authenticatedHomePage = protectedStep("Click login button", loginPage::submitLogin);
+        HomePage authenticatedHomePage = protectedStep("Click 'login' button", loginPage::submitLogin);
         protectedAssertionStep(
-                "Verify login success",
-                () -> authenticatedHomePage.waitUntilAuthenticated(config.smokeLoginDisplayName()),
+                "Verify that 'Logged in as username' is visible",
+                () -> authenticatedHomePage.waitUntilAuthenticated(user.displayName()),
                 loginPage::submitLogin);
 
-        LoginPage loggedOutLoginPage = protectedStep("Click logout button", authenticatedHomePage::logout);
-        protectedAssertionStep("Verify logout success", loggedOutLoginPage::waitUntilReady, authenticatedHomePage::logout);
+        LOG.info("[INFO] Deleting account for email={}", user.email());
+        AccountDeletedPage accountDeletedPage = protectedStep(
+                "Click 'Delete Account' button",
+                authenticatedHomePage::deleteAccount);
+        protectedAssertionStep(
+                "Verify that 'ACCOUNT DELETED!' is visible",
+                accountDeletedPage::assertVisible,
+                authenticatedHomePage::deleteAccount);
     }
 
     private void step(String action, Runnable runnable) {
@@ -64,7 +76,7 @@ public final class SmokeLoginLogoutFlow {
         }
     }
 
-    private <T> T step(String action, java.util.function.Supplier<T> supplier) {
+    private <T> T step(String action, Supplier<T> supplier) {
         LOG.info("[START] {}", action);
         try {
             T result = supplier.get();

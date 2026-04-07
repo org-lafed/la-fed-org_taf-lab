@@ -10,6 +10,7 @@ import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,6 +22,8 @@ public abstract class BasePage {
 
     private static final By CONSENT_ALLOW_BUTTON = By.xpath(
             "//button[normalize-space()='Autoriser' or normalize-space()='Accept' or normalize-space()='Accept All']");
+    private static final By GENERIC_CLOSE_TEXT = By.xpath("//*[normalize-space()='Close']");
+    private static final By GENERIC_CLOSE_BUTTON = By.cssSelector("button[aria-label='Close'], button[title='Close'], .modal .close");
 
     protected final WebDriver driver;
     protected final ExecutionConfig config;
@@ -38,6 +41,10 @@ public abstract class BasePage {
 
     protected String currentTitle() {
         return driver.getTitle();
+    }
+
+    protected String currentUrl() {
+        return driver.getCurrentUrl();
     }
 
     protected WebElement visible(By locator) {
@@ -61,7 +68,7 @@ public abstract class BasePage {
     }
 
     protected void type(By locator, String value) {
-        WebElement element = visible(locator);
+        WebElement element = prepareForInteraction(locator);
         element.clear();
         element.sendKeys(value);
         if (value.equals(element.getAttribute("value"))) {
@@ -86,14 +93,19 @@ public abstract class BasePage {
 
     protected void click(By locator) {
         try {
-            clickable(locator).click();
+            WebElement element = prepareForInteraction(locator);
+            if (!isElementUnobstructed(element)) {
+                dismissBlockingInterferenceIfPresent();
+                element = prepareForInteraction(locator);
+            }
+            element.click();
         } catch (ElementClickInterceptedException | TimeoutException exception) {
             clickWithJavascript(locator);
         }
     }
 
     protected void clickWithJavascript(By locator) {
-        WebElement element = visible(locator);
+        WebElement element = prepareForInteraction(locator);
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
@@ -130,6 +142,19 @@ public abstract class BasePage {
         });
     }
 
+    protected void dismissBlockingInterferenceIfPresent() {
+        dismissIfDisplayed(GENERIC_CLOSE_TEXT);
+        dismissIfDisplayed(GENERIC_CLOSE_BUTTON);
+    }
+
+    protected boolean isElementUnobstructed(By locator) {
+        try {
+            return isElementUnobstructed(visible(locator));
+        } catch (RuntimeException exception) {
+            return false;
+        }
+    }
+
     public void acceptConsentIfPresent() {
         List<WebElement> buttons = driver.findElements(CONSENT_ALLOW_BUTTON);
         if (buttons.isEmpty()) {
@@ -151,6 +176,56 @@ public abstract class BasePage {
             } catch (RuntimeException ignored) {
                 // Best effort only: do not fail the scenario on consent handling.
             }
+        }
+    }
+
+    private void dismissIfDisplayed(By locator) {
+        List<WebElement> elements = driver.findElements(locator);
+        for (WebElement element : elements) {
+            if (!element.isDisplayed()) {
+                continue;
+            }
+
+            try {
+                element.click();
+            } catch (RuntimeException exception) {
+                try {
+                    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+                } catch (RuntimeException ignored) {
+                    continue;
+                }
+            }
+
+            try {
+                waitUtils.untilInvisible(driver, locator, Duration.ofSeconds(2));
+            } catch (RuntimeException ignored) {
+                // Best effort only.
+            }
+            return;
+        }
+    }
+
+    private WebElement prepareForInteraction(By locator) {
+        WebElement element = visible(locator);
+        executeScript("arguments[0].scrollIntoView({block: 'center', inline: 'center'});", element);
+        return visible(locator);
+    }
+
+    private boolean isElementUnobstructed(WebElement element) {
+        try {
+            Object result = executeScript(
+                    "const element = arguments[0];"
+                            + "if (!element || !element.isConnected) return false;"
+                            + "const rect = element.getBoundingClientRect();"
+                            + "if (rect.width <= 0 || rect.height <= 0) return false;"
+                            + "const x = rect.left + (rect.width / 2);"
+                            + "const y = rect.top + (rect.height / 2);"
+                            + "const topElement = document.elementFromPoint(x, y);"
+                            + "return !!topElement && (topElement === element || element.contains(topElement));",
+                    element);
+            return Boolean.TRUE.equals(result);
+        } catch (StaleElementReferenceException exception) {
+            return false;
         }
     }
 

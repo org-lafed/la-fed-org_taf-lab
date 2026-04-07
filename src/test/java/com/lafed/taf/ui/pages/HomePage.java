@@ -61,6 +61,10 @@ public final class HomePage extends BasePage {
         return this;
     }
 
+    public HomePage assertVisible() {
+        return waitUntilReady();
+    }
+
     public boolean isLoggedInAs(String expectedDisplayName) {
         return header().isLoggedInAs(expectedDisplayName);
     }
@@ -68,6 +72,11 @@ public final class HomePage extends BasePage {
     public LoginPage logout() {
         header().clickLogout();
         return new LoginPage(driver, config, waitUtils).waitUntilReady();
+    }
+
+    public AccountDeletedPage deleteAccount() {
+        header().clickDeleteAccount();
+        return new AccountDeletedPage(driver, config, waitUtils);
     }
 
     private HeaderComponent header() {
